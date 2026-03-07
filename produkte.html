@@ -427,81 +427,179 @@
         @media (max-width: 900px) {
             header {
                 flex-direction: column;
-                padding: 15px 20px;
-                font-size: 24px;
+                padding: 12px 18px;
+                font-size: 22px;
             }
             nav {
-                margin-top: 10px;
+                margin-top: 8px;
             }
             nav a {
-                margin-left: 15px;
-                font-size: 1em;
+                margin-left: 12px;
+                font-size: 0.95em;
             }
             .page-title h1 {
-                font-size: 40px;
+                font-size: 34px;
             }
             .page-title p {
-                font-size: 18px;
+                font-size: 16px;
             }
             .controls {
-                padding: 0 15px 20px;
-                top: 118px;
+                padding: 0 12px 16px;
+                position: static;
+                top: auto;
+            }
+            .controls-bar {
+                padding: 16px;
+                border-radius: 16px;
+            }
+            .controls-header {
+                margin-bottom: 14px;
+            }
+            .controls-title {
+                font-size: 14px;
+            }
+            .controls-toggle,
+            .search-row input,
+            .sort-row select {
+                padding: 9px 12px;
+                font-size: 14px;
             }
             .search-row,
             .sort-row {
                 justify-content: center;
                 flex-wrap: wrap;
+                gap: 10px;
+            }
+            .search-row {
+                margin-bottom: 14px;
+            }
+            .sort-row {
+                margin-bottom: 16px;
+            }
+            .filter-group + .filter-group {
+                margin-top: 14px;
+            }
+            .filter-group-title {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 13px;
             }
             .products-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
-                padding: 30px 15px 60px;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 16px;
+                padding: 22px 12px 48px;
             }
             .product-card {
-                padding: 15px;
+                padding: 14px;
             }
             .product-card h3 {
-                font-size: 1.1em;
+                font-size: 1rem;
+            }
+            .product-card p {
+                font-size: 14px;
+            }
+            .product-card .category {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            .label-badge {
+                padding: 5px 10px;
+                font-size: 11px;
             }
             .price {
-                font-size: 20px;
+                font-size: 18px;
             }
         }
 
         @media (max-width: 600px) {
             header {
-                font-size: 20px;
+                font-size: 18px;
+                padding: 10px 14px;
+            }
+            header img {
+                height: 52px;
+            }
+            nav {
+                margin-top: 8px;
+            }
+            nav a {
+                margin-left: 10px;
+                font-size: 0.88em;
             }
             .page-title h1 {
-                font-size: 32px;
+                font-size: 28px;
             }
             .page-title p {
-                font-size: 16px;
+                font-size: 14px;
             }
             .controls-bar {
-                padding: 16px;
+                padding: 14px;
             }
             .controls {
-                top: 132px;
+                position: static;
+                top: auto;
             }
             .controls-header {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 10px;
+                margin-bottom: 12px;
+            }
+            .controls-title {
+                font-size: 13px;
             }
             .search-row {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            .sort-row {
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .controls-toggle,
+            .search-row input,
+            .sort-row select {
+                padding: 8px 10px;
+                font-size: 13px;
             }
             .filter-btn {
                 width: 100%;
+                padding: 8px 10px;
+                font-size: 12px;
             }
             .products-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
-                padding: 20px 10px 40px;
+                gap: 12px;
+                padding: 18px 10px 36px;
+            }
+            .product-card {
+                padding: 12px;
             }
             .product-card h3 {
-                font-size: 1em;
+                font-size: 0.95rem;
+            }
+            .product-card p {
+                font-size: 13px;
+            }
+            .product-card .category {
+                font-size: 11px;
+                margin-bottom: 10px;
+            }
+            .labels {
+                gap: 6px;
+                margin-bottom: 10px;
+            }
+            .label-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .price {
+                font-size: 17px;
             }
         }
 

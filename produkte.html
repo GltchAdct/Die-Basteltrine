@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkte - Die Basteltrine</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #003631;
+            color: #FFEDA8;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #00231F;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-size: 30px;
+        }
+
+        header img {
+            height: 60px;
+        }
+
+        nav a {
+            margin-left: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #FFEDA8;
+            transition: color .3s;
+        }
+
+        nav a.active {
+            border-bottom: 3px solid #ffd116;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: #FFD166;
+        }
+
+        /* TITEL */
+        .page-title {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .page-title h1 {
+            font-size: 50px;
+            color: #FFD166;
+        }
+
+        .page-title p {
+            margin-top: 14px;
+            font-size: 20px;
+        }
+
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 20px;
+            position: sticky;
+            top: 96px;
+            z-index: 90;
+        }
+
+        .controls-bar {
+            background: #00544B;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .controls-title {
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #FFD166;
+        }
+
+        .controls-toggle {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 999px;
+            background: #FFEDA8;
+            color: #003631;
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .controls-content {
+            overflow: hidden;
+            max-height: 1000px;
+            opacity: 1;
+            transition: max-height .35s ease, opacity .25s ease, margin .25s ease;
+        }
+
+        .controls.collapsed .controls-content {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .controls.collapsed .controls-header {
+            margin-bottom: 0;
+        }
+
+        .search-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .search-row label {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .search-row input {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 10px;
+            background: #FFEDA8;
+            color: #003631;
+            font: inherit;
+        }
+
+        .sort-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .sort-row label {
+            font-weight: bold;
+        }
+
+        .sort-row select {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 10px;
+            background: #FFEDA8;
+            color: #003631;
+            font: inherit;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .filter-group + .filter-group {
+            margin-top: 18px;
+        }
+
+        .filter-group-title {
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #FFD166;
+            margin-bottom: 12px;
+        }
+
+        .filter-btn {
+            padding: 10px 16px;
+            border: 1px solid rgba(255, 237, 168, 0.35);
+            border-radius: 999px;
+            background: transparent;
+            color: #FFEDA8;
+            font: inherit;
+            cursor: pointer;
+            transition: background .25s ease, color .25s ease, transform .25s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #FFD166;
+            color: #003631;
+            transform: translateY(-2px);
+        }
+
+        /* GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+            gap: 40px;
+            justify-content: center;
+            padding: 40px 20px 80px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        /* PRODUKTKARTEN */
+        .product-card {
+            background: #00544B;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.07);
+            box-shadow: 0 20px 40px rgba(255,209,102,0.6);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform .4s ease;
+        }
+
+        .product-card p {
+            line-height: 1.5;
+        }
+
+        .product-card .category {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #0F766E, #155E75);
+            color: #E8FFFB;
+            border: 1px solid rgba(157, 255, 244, 0.3);
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+        }
+
+        .labels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 0 0 14px;
+        }
+
+        .label-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        .label-badge.neu {
+            background: linear-gradient(135deg, #FF8FB1, #D94F70);
+            color: #FFF6FB;
+            border: 1px solid rgba(255, 196, 214, 0.55);
+        }
+
+        .label-badge.personalisiert {
+            background: linear-gradient(135deg, #6C63FF, #3F37C9);
+            color: #F4F2FF;
+            border: 1px solid rgba(197, 192, 255, 0.45);
+        }
+
+        .label-badge.saisonal {
+            color: #FFF6E9;
+        }
+
+        .label-badge.saisonal.season-winter {
+            background: linear-gradient(135deg, #F8FBFF, #DCE8F5);
+            color: #24415C;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .label-badge.saisonal.season-spring {
+            background: linear-gradient(135deg, #DFF7D6, #9DDE8B);
+            color: #204B2B;
+            border: 1px solid rgba(224, 255, 214, 0.8);
+        }
+
+        .label-badge.saisonal.season-summer {
+            background: linear-gradient(135deg, #FFF3AE, #FFD54F);
+            color: #5A4200;
+            border: 1px solid rgba(255, 245, 180, 0.85);
+        }
+
+        .label-badge.saisonal.season-autumn {
+            background: linear-gradient(135deg, #B86A34, #7B3F1D);
+            color: #FFF3E6;
+            border: 1px solid rgba(255, 214, 179, 0.35);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: #00544B;
+            border-radius: 16px;
+            padding: 30px 20px;
+            font-size: 20px;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* MODAL OVERLAY */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+            padding: 30px;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* MODAL CONTENT */
+        .modal-content {
+            background: #00544B;
+            padding: 40px 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            position: relative;
+            transform: scale(.7);
+            opacity: 0;
+            transition: all .45s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            transition: transform .4s ease;
+        }
+
+        .modal-content img:hover {
+            transform: scale(1.03);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #FFD166;
+        }
+
+        .modal-category {
+            display: inline-block;
+            margin: 10px 0 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #0F766E, #155E75);
+            color: #E8FFFB;
+            border: 1px solid rgba(157, 255, 244, 0.3);
+            font-weight: bold;
+        }
+
+        .modal-labels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0 14px;
+        }
+
+        /* ----- RESPONSIVENESS ----- */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+                font-size: 24px;
+            }
+            nav {
+                margin-top: 10px;
+            }
+            nav a {
+                margin-left: 15px;
+                font-size: 1em;
+            }
+            .page-title h1 {
+                font-size: 40px;
+            }
+            .page-title p {
+                font-size: 18px;
+            }
+            .controls {
+                padding: 0 15px 20px;
+                top: 118px;
+            }
+            .search-row,
+            .sort-row {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 30px 15px 60px;
+            }
+            .product-card {
+                padding: 15px;
+            }
+            .product-card h3 {
+                font-size: 1.1em;
+            }
+            .price {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                font-size: 20px;
+            }
+            .page-title h1 {
+                font-size: 32px;
+            }
+            .page-title p {
+                font-size: 16px;
+            }
+            .controls-bar {
+                padding: 16px;
+            }
+            .controls {
+                top: 132px;
+            }
+            .controls-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-btn {
+                width: 100%;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px 10px 40px;
+            }
+            .product-card h3 {
+                font-size: 1em;
+            }
+        }
+
+                footer{
+            background:#00231F;
+            text-align:center;
+            padding:30px;
+            margin-top:50px;
+        }
+
+        footer p{
+            color:#A5A5A5;
+            font-size:14px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="BasteltrineCOLOR.png" alt="Logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="produkte.html" class="active">Produkte</a>
+            <a href="kontakt.html">Kontakt</a>
+        </nav>
+    </header>
+
+    <section class="page-title">
+        <h1>Unsere Produkte</h1>
+        <p>Hier findest du handgemachte Einzelstücke, Geschenkideen und personalisierbare Deko für viele Anlässe.</p>
+    </section>
+
+    <section class="controls">
+        <div class="controls-bar">
+            <div class="controls-header">
+                <div class="controls-title">Filter & Suche</div>
+                <button class="controls-toggle" id="controlsToggle" type="button">Einklappen</button>
+            </div>
+
+            <div class="controls-content" id="controlsContent">
+                <div class="search-row">
+                    <label for="searchInput">Suche:</label>
+                    <input id="searchInput" type="search" placeholder="Produktname oder Beschreibung durchsuchen">
+                </div>
+
+                <div class="sort-row">
+                    <label for="sortSelect">Sortieren:</label>
+                    <select id="sortSelect">
+                        <option value="name-asc">Name A-Z</option>
+                        <option value="oldest">Älteste</option>
+                        <option value="newest">Neuste</option>
+                        <option value="price-asc">Niedrigster Preis</option>
+                        <option value="price-desc">Höchster Preis</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Kategorien</div>
+                    <div class="filters" id="categoryButtons"></div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Labels</div>
+                    <div class="filters" id="labelButtons"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-grid" id="productsGrid">
+    </section>
+
+    <div class="modal" id="productModal" onclick="outsideClick(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <img id="modalImg" alt="">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-category" id="modalCategory"></div>
+            <div class="modal-labels" id="modalLabels"></div>
+            <p id="modalDesc"></p>
+            <div class="price" id="modalPrice"></div>
+        </div>
+    </div>
+
+    <script>
+        const categories = [
+            "Alle",
+            "Beton",
+            "Dekoration",
+            "Geschenke",
+            "Hochzeit",
+            "Kerzen",
+            "Lampen",
+            "Personalisierte Kleidung",
+            "Plastalin",
+            "Schlüsselanhänger Bunt",
+            "Taschen",
+            "Trinkgläser",
+            "Vorrat"
+        ];
+
+        const labelFilters = ["Neu", "Saisonal", "Personalisiert"];
+
+        //* Richtige Produkte einfügen mit Bildern und die Erstelldaten und Namen ändern //*
+
+        const products = [
+            { id: 1, name: "Beton-Aufsteller", category: "Beton", labels: [], description: "Schlichter Aufsteller aus Beton für moderne Dekoideen und kleine Statements im Regal.", price: 18.5, displayPrice: "18,50 €", image: "produkt1.png", createdAt: "2024-01-12" },
+            { id: 2, name: "Dekotablett Natur", category: "Dekoration", labels: ["Saisonal"], description: "Vielseitiges Dekotablett für Kerzen, Vasen oder saisonale Arrangements.", price: 14.9, displayPrice: "14,90 €", image: "produkt2.jpg", createdAt: "2024-02-03" },
+            { id: 3, name: "Geschenkset Klein", category: "Geschenke", labels: [], description: "Liebevoll zusammengestelltes Geschenkset für Geburtstage und kleine Überraschungen.", price: 24.99, displayPrice: "24,99 €", image: "produkt3.png", createdAt: "2024-03-17" },
+            { id: 4, name: "Hochzeitsaufsteller", category: "Hochzeit", labels: ["Personalisiert"], description: "Personalisierter Aufsteller für Trautisch, Geschenketisch oder Fotobereich.", price: 29.0, displayPrice: "29,00 €", image: "produkt4.png", createdAt: "2024-04-05" },
+            { id: 5, name: "Kerzenhalter Gold", category: "Kerzen", labels: [], description: "Dekorativer Kerzenhalter für Tischdeko, Feste und ruhige Abende zuhause.", price: 12.0, displayPrice: "12,00 €", image: "produkt5.png", createdAt: "2024-05-11" },
+            { id: 6, name: "Lampe Stern", category: "Lampen", labels: ["Neu"], description: "Handgemachte Deko-Lampe mit sanfter Lichtwirkung für Kinderzimmer oder Wohnzimmer.", price: 34.5, displayPrice: "34,50 €", image: "produkt6.png", createdAt: "2024-06-22" },
+            { id: 7, name: "Shirt mit Namen", category: "Personalisierte Kleidung", labels: ["Neu", "Personalisiert"], description: "Individuell gestaltetes Kleidungsstück mit Namen, Motiv oder Anlass.", price: 27.9, displayPrice: "27,90 €", image: "produkt2.jpg", createdAt: "2024-07-14" },
+            { id: 8, name: "Plastalin-Schale", category: "Plastalin", labels: [], description: "Dekorative Schale aus Plastalin für Schmuck, Schlüssel oder kleine Lieblingsstücke.", price: 16.4, displayPrice: "16,40 €", image: "produkt3.png", createdAt: "2024-08-09" },
+            { id: 9, name: "Bunter Schlüsselanhänger", category: "Schlüsselanhänger Bunt", labels: ["Neu"], description: "Farbenfroher Anhänger als kleines Mitbringsel oder persönliches Accessoire.", price: 6.5, displayPrice: "6,50 €", image: "produkt1.png", createdAt: "2024-09-01" },
+            { id: 10, name: "Stofftasche Blumen", category: "Taschen", labels: ["Saisonal"], description: "Praktische Stofftasche mit kreativem Motiv, ideal für Alltag und Geschenkideen.", price: 19.9, displayPrice: "19,90 €", image: "produkt4.png", createdAt: "2024-10-13" },
+            { id: 11, name: "Trinkglas Gravur", category: "Trinkgläser", labels: ["Personalisiert"], description: "Veredeltes Trinkglas mit Personalisierung für Feiern, Hochzeit oder Geschenkset.", price: 11.8, displayPrice: "11,80 €", image: "produkt5.png", createdAt: "2024-11-04" },
+            { id: 12, name: "Vorratsglas Etikett", category: "Vorrat", labels: ["Neu"], description: "Schönes Glas für Küche und Vorratsschrank mit dekorativer Beschriftung.", price: 13.6, displayPrice: "13,60 €", image: "produkt6.png", createdAt: "2024-12-15" }
+        ];
+
+        const productsGrid = document.getElementById("productsGrid");
+        const categoryButtons = document.getElementById("categoryButtons");
+        const labelButtons = document.getElementById("labelButtons");
+        const sortSelect = document.getElementById("sortSelect");
+        const searchInput = document.getElementById("searchInput");
+        const controls = document.querySelector(".controls");
+        const controlsToggle = document.getElementById("controlsToggle");
+        const collator = new Intl.Collator("de", { sensitivity: "base" });
+        let activeCategory = "Alle";
+        let activeLabel = "Alle";
+        let lastScrollY = window.scrollY;
+
+        function getSeasonClass() {
+            const month = new Date().getMonth() + 1;
+
+            if (month === 12 || month === 1 || month === 2) {
+                return "season-winter";
+            }
+
+            if (month >= 3 && month <= 5) {
+                return "season-spring";
+            }
+
+            if (month >= 6 && month <= 8) {
+                return "season-summer";
+            }
+
+            return "season-autumn";
+        }
+
+        function renderLabels(labels) {
+            return (labels || []).map(function (label) {
+                const baseClass = label.toLowerCase();
+                const seasonClass = label === "Saisonal" ? " " + getSeasonClass() : "";
+                return `<span class="label-badge ${baseClass}${seasonClass}">${label}</span>`;
+            }).join("");
+        }
+
+        function scrollToTopOfProducts() {
+            const targetTop = Math.max(window.scrollY + controls.getBoundingClientRect().top - 20, 0);
+            window.scrollTo({
+                top: targetTop,
+                behavior: "smooth"
+            });
+        }
+
+        function setControlsCollapsed(collapsed) {
+            controls.classList.toggle("collapsed", collapsed);
+            controlsToggle.textContent = collapsed ? "Filter öffnen" : "Einklappen";
+        }
+
+        function createButtons(container, options, activeValue, onClick) {
+            container.innerHTML = "";
+
+            options.forEach(function (filter) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "filter-btn" + (filter === activeValue ? " active" : "");
+                button.textContent = filter;
+
+                button.addEventListener("click", function () {
+                    onClick(filter);
+                    createFilterButtons();
+                    renderProducts();
+                });
+
+                container.appendChild(button);
+            });
+        }
+
+        function createFilterButtons() {
+            createButtons(categoryButtons, categories, activeCategory, function (filter) {
+                activeCategory = filter;
+            });
+
+            createButtons(labelButtons, ["Alle", ...labelFilters], activeLabel, function (filter) {
+                activeLabel = filter;
+            });
+        }
+
+        function getSortedProducts(items) {
+            const sorted = [...items];
+
+            switch (sortSelect.value) {
+                case "oldest":
+                    sorted.sort(function (a, b) {
+                        return new Date(a.createdAt) - new Date(b.createdAt);
+                    });
+                    break;
+                case "newest":
+                    sorted.sort(function (a, b) {
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    });
+                    break;
+                case "price-asc":
+                    sorted.sort(function (a, b) {
+                        return a.price - b.price;
+                    });
+                    break;
+                case "price-desc":
+                    sorted.sort(function (a, b) {
+                        return b.price - a.price;
+                    });
+                    break;
+                case "name-asc":
+                default:
+                    sorted.sort(function (a, b) {
+                        return collator.compare(a.name, b.name);
+                    });
+                    break;
+            }
+
+            return sorted;
+        }
+
+        function renderProducts() {
+            const searchValue = searchInput.value.trim().toLocaleLowerCase("de");
+
+            const filteredProducts = products.filter(function (product) {
+                const matchesCategory = activeCategory === "Alle" || product.category === activeCategory;
+                const matchesLabel = activeLabel === "Alle" || (product.labels || []).includes(activeLabel);
+                const matchesSearch = searchValue === ""
+                    || product.name.toLocaleLowerCase("de").includes(searchValue)
+                    || product.description.toLocaleLowerCase("de").includes(searchValue)
+                    || product.category.toLocaleLowerCase("de").includes(searchValue);
+
+                return matchesCategory && matchesLabel && matchesSearch;
+            });
+
+            const sortedProducts = getSortedProducts(filteredProducts);
+
+            if (!sortedProducts.length) {
+                productsGrid.innerHTML = '<div class="empty-state">Für diese Auswahl sind aktuell keine Produkte hinterlegt.</div>';
+                return;
+            }
+
+            productsGrid.innerHTML = sortedProducts.map(function (product) {
+                const labels = renderLabels(product.labels);
+
+                return `
+                    <div class="product-card" data-id="${product.id}">
+                        <div class="labels">${labels}</div>
+                        <span class="category">${product.category}</span>
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                    </div>
+                `;
+            }).join("");
+
+            document.querySelectorAll(".product-card").forEach(function (card) {
+                card.addEventListener("click", function () {
+                    const productId = Number(card.dataset.id);
+                    const product = products.find(function (item) {
+                        return item.id === productId;
+                    });
+
+                    if (product) {
+                        openModal(product);
+                    }
+                });
+            });
+        }
+
+        function openModal(product) {
+            document.getElementById("modalImg").src = product.image;
+            document.getElementById("modalImg").alt = product.name;
+            document.getElementById("modalTitle").innerText = product.name;
+            document.getElementById("modalCategory").innerText = product.category;
+            document.getElementById("modalLabels").innerHTML = renderLabels(product.labels);
+            document.getElementById("modalDesc").innerText = product.description;
+            document.getElementById("modalPrice").innerText = product.displayPrice;
+            document.getElementById("productModal").classList.add("active");
+        }
+
+        function closeModal() {
+            document.getElementById("productModal").classList.remove("active");
+        }
+
+        function outsideClick(event) {
+            if (event.target.classList.contains("modal")) {
+                closeModal();
+            }
+        }
+
+        sortSelect.addEventListener("change", function () {
+            renderProducts();
+        });
+
+        searchInput.addEventListener("input", function () {
+            renderProducts();
+        });
+
+        controlsToggle.addEventListener("click", function () {
+            const isCollapsed = controls.classList.contains("collapsed");
+            setControlsCollapsed(!isCollapsed);
+        });
+
+        window.addEventListener("scroll", function () {
+            const currentScrollY = window.scrollY;
+            const isScrollingDown = currentScrollY > lastScrollY;
+            const hasScrolledEnough = currentScrollY > 260;
+
+            if (hasScrolledEnough && isScrollingDown && !controls.classList.contains("collapsed")) {
+                setControlsCollapsed(true);
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                closeModal();
+            }
+        });
+
+        createFilterButtons();
+        renderProducts();
+    </script>
+
+<footer>
+    <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+</footer>
+
+</body>
+</html>

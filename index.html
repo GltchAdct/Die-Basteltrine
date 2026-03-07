@@ -258,6 +258,20 @@
             font-size: 14px;
         }
 
+        .footer-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #FFEDA8;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
         /* ----- RESPONSIVENESS ----- */
         @media (max-width: 900px) {
             header {
@@ -413,7 +427,7 @@
     <!-- Öffnungszeiten Info -->
     <section class="opening-info">
         <p>Unsere Öffnungszeiten variieren. Aktuelle Infos findest du auf 
-            <a class="social-link" href="https://www.facebook.com/die.basteltrine" onclick="openFacebook(event, 'https://www.facebook.com/DeinLaden', 'fb://facewebmodal/f?href=https://www.facebook.com/DeinLaden')">
+            <a class="social-link" href="https://www.facebook.com/die.basteltrine" onclick="openFacebook(event, 'https://www.facebook.com/die.basteltrine', 'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine')">
                 <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.022 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.017 1.792-4.685 4.533-4.685 1.313 0 2.686.236 2.686.236v2.963H15.83c-1.49 0-1.955.928-1.955 1.88v2.258h3.328l-.532 3.49h-2.796V24C19.612 23.095 24 18.1 24 12.073z"/>
                 </svg>
@@ -541,6 +555,10 @@
 
 <footer>
     <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
 </footer>
 
 </body>

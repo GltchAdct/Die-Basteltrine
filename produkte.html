@@ -631,6 +631,7 @@
         const controls = document.querySelector(".controls");
         const controlsToggle = document.getElementById("controlsToggle");
         const collator = new Intl.Collator("de", { sensitivity: "base" });
+        const desktopMediaQuery = window.matchMedia("(min-width: 901px)");
         let activeCategory = "Alle";
         let activeLabel = "Alle";
         let lastScrollY = window.scrollY;
@@ -672,6 +673,10 @@
         function setControlsCollapsed(collapsed) {
             controls.classList.toggle("collapsed", collapsed);
             controlsToggle.textContent = collapsed ? "Filter öffnen" : "Einklappen";
+        }
+
+        function isDesktopViewport() {
+            return desktopMediaQuery.matches;
         }
 
         function createButtons(container, options, activeValue, onClick) {
@@ -822,15 +827,26 @@
         });
 
         window.addEventListener("scroll", function () {
+            if (!isDesktopViewport()) {
+                lastScrollY = window.scrollY;
+                return;
+            }
+
             const currentScrollY = window.scrollY;
             const isScrollingDown = currentScrollY > lastScrollY;
             const hasScrolledEnough = currentScrollY > 260;
 
             if (hasScrolledEnough && isScrollingDown && !controls.classList.contains("collapsed")) {
                 setControlsCollapsed(true);
-            }
+             }
 
             lastScrollY = currentScrollY;
+        });
+
+        desktopMediaQuery.addEventListener("change", function () {
+            if (!isDesktopViewport()) {
+                setControlsCollapsed(false);
+            }
         });
 
         document.addEventListener("keydown", function (e) {

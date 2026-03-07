@@ -106,35 +106,20 @@
             text-decoration: underline;
         }
 
-        .contact-form {
+        .mail-note {
             display: grid;
             gap: 14px;
         }
 
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: none;
-            border-radius: 10px;
-            font: inherit;
-            background: #FFEDA8;
-            color: #00231F;
-        }
-
-        .contact-form textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-
-        .contact-form button {
+        .mail-cta {
+            display: inline-block;
             padding: 12px 20px;
-            border: none;
             border-radius: 10px;
             background: linear-gradient(45deg,#FFD166,#FFB703);
             color: #003631;
             font-weight: bold;
-            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
         }
 
         /* ----- RESPONSIVENESS ----- */
@@ -211,17 +196,12 @@
             .contact-card a {
                 font-size: 14px;
             }
-            .contact-form {
+            .mail-note {
                 gap: 10px;
             }
-            .contact-form input,
-            .contact-form textarea,
-            .contact-form button {
+            .mail-cta {
                 font-size: 14px;
                 padding: 10px 12px;
-            }
-            .contact-form textarea {
-                min-height: 120px;
             }
         }
 
@@ -235,6 +215,20 @@
         footer p{
             color:#A5A5A5;
             font-size:14px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #FFEDA8;
+            text-decoration: underline;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -260,7 +254,7 @@
                 <li>E-Mail: <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a></li>
                 <li>Telefon: <a href="tel:+49151541663300">+49 151 541663300</a></li>
                 <li>Instagram: <a href="https://www.instagram.com/die_basteltrine_/" target="_blank" rel="noopener noreferrer">@die_basteltrine_</a></li>
-                <li>Facebook: <a href="https://www.facebook.com/die.basteltrine" onclick="openFacebook(event, 'https://www.facebook.com/DeinLaden', 'fb://facewebmodal/f?href=https://www.facebook.com/DeinLaden')">Zur Facebook-Seite</a></li>
+                <li>Facebook: <a href="https://www.facebook.com/die.basteltrine" onclick="openFacebook(event, 'https://www.facebook.com/die.basteltrine', 'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine')">Zur Facebook-Seite</a></li>
             </ul>
         </div>
 
@@ -271,19 +265,12 @@
         </div>
 
         <div class="contact-card">
-            <h2>Nachricht senden</h2>
-            <form class="contact-form">
-                <label for="name">Name</label>
-                <input id="name" name="name" type="text" placeholder="Dein Name">
-
-                <label for="email">E-Mail</label>
-                <input id="email" name="email" type="email" placeholder="deine@email.de">
-
-                <label for="message">Nachricht</label>
-                <textarea id="message" name="message" placeholder="Was möchtest du anfragen?"></textarea>
-
-                <button type="submit">Anfrage absenden</button>
-            </form>
+            <h2>Persönliche Anfrage</h2>
+            <div class="mail-note">
+                <p>Für persönliche Anfragen, Sonderwünsche oder Bestellungen schreib uns einfach direkt per E-Mail.</p>
+                <p>Am besten mit ein paar Infos zu deinem Wunsch, zum Anlass und falls wichtig auch zum gewünschten Termin.</p>
+                <a class="mail-cta" href="mailto:basteltrine@magenta.de?subject=Pers%C3%B6nliche%20Anfrage">Per E-Mail anfragen</a>
+            </div>
         </div>
     </section>
 
@@ -310,6 +297,10 @@
 
 <footer>
     <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
 </footer>
 
 </body>

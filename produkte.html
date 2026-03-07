@@ -112,6 +112,22 @@
             cursor: pointer;
         }
 
+        .controls-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 14px;
+        }
+
+        .reset-btn {
+            padding: 9px 14px;
+            border: 1px solid rgba(255, 237, 168, 0.35);
+            border-radius: 999px;
+            background: transparent;
+            color: #FFEDA8;
+            font: inherit;
+            cursor: pointer;
+        }
+
         .controls-content {
             overflow: visible;
             max-height: none;
@@ -618,7 +634,7 @@
             }
         }
 
-                footer{
+        footer{
             background:#00231F;
             text-align:center;
             padding:30px;
@@ -628,6 +644,20 @@
         footer p{
             color:#A5A5A5;
             font-size:14px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #FFEDA8;
+            text-decoration: underline;
+            font-size: 14px;
         }
         
     </style>
@@ -656,6 +686,10 @@
             </div>
 
             <div class="controls-content" id="controlsContent">
+                <div class="controls-actions">
+                    <button class="reset-btn" id="resetFiltersBtn" type="button">Filter zurücksetzen</button>
+                </div>
+
                 <div class="search-row">
                     <label for="searchInput">Suche:</label>
                     <input id="searchInput" type="search" placeholder="Produktname oder Beschreibung durchsuchen">
@@ -741,6 +775,7 @@
         const labelButtons = document.getElementById("labelButtons");
         const sortSelect = document.getElementById("sortSelect");
         const searchInput = document.getElementById("searchInput");
+        const resetFiltersBtn = document.getElementById("resetFiltersBtn");
         const controls = document.querySelector(".controls");
         const controlsToggle = document.getElementById("controlsToggle");
         const collator = new Intl.Collator("de", { sensitivity: "base" });
@@ -805,6 +840,15 @@
             createButtons(labelButtons, ["Alle", ...labelFilters], activeLabel, function (filter) {
                 activeLabel = filter;
             });
+        }
+
+        function resetFilters() {
+            activeCategory = "Alle";
+            activeLabel = "Alle";
+            searchInput.value = "";
+            sortSelect.value = "name-asc";
+            createFilterButtons();
+            renderProducts();
         }
 
         function getSortedProducts(items) {
@@ -920,6 +964,10 @@
             renderProducts();
         });
 
+        resetFiltersBtn.addEventListener("click", function () {
+            resetFilters();
+        });
+
         controlsToggle.addEventListener("click", function () {
             const isCollapsed = controls.classList.contains("collapsed");
             setControlsCollapsed(!isCollapsed);
@@ -937,6 +985,10 @@
 
 <footer>
     <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
 </footer>
 
 </body>

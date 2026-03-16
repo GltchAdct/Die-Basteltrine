@@ -1,307 +1,399 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kontakt</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #003631;
-            color: #FFEDA8;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background: #003631;
+        color: #ffeda8;
+      }
 
-        /* HEADER */
+      /* HEADER */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background: #00231f;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        font-size: 30px;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      nav a {
+        margin-left: 25px;
+        font-weight: bold;
+        color: #ffeda8;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .cart-badge {
+        background: #ffd166;
+        color: #00231f;
+        border-radius: 999px;
+        padding: 2px 6px;
+        margin-left: 4px;
+        font-size: 0.8em;
+        font-weight: bold;
+        display: none;
+      }
+
+      .nav-icon {
+        margin-left: 6px;
+        font-size: 0.9em;
+      }
+
+      nav a:hover:not(.active) {
+        color: #ffd166;
+      }
+
+      nav a.active {
+        border-bottom: 3px solid #ffd166;
+        padding-bottom: 5px;
+      }
+
+      /* TITEL */
+      .page-title {
+        text-align: center;
+        padding: 80px 20px;
+      }
+
+      .page-title h1 {
+        font-size: 50px;
+        color: #ffd166;
+      }
+
+      .contact-wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+
+      .contact-card {
+        background: #00544b;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .contact-card h2 {
+        color: #ffd166;
+        margin-bottom: 16px;
+        font-size: 28px;
+      }
+
+      .contact-card p,
+      .contact-card li,
+      .contact-card label,
+      .contact-card a {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #ffeda8;
+      }
+
+      .contact-card ul {
+        list-style: none;
+      }
+
+      .contact-card li + li {
+        margin-top: 10px;
+      }
+
+      .contact-card a {
+        text-decoration: underline;
+      }
+
+      .mail-note {
+        display: grid;
+        gap: 14px;
+      }
+
+      .mail-cta {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #ffd166, #ffb703);
+        color: #003631;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* ----- RESPONSIVENESS ----- */
+      @media (max-width: 900px) {
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background: #00231F;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            font-size: 30px;
+          flex-direction: column;
+          padding: 12px 18px;
+          font-size: 22px;
         }
-
-        header img {
-            height: 60px;
+        nav {
+          margin-top: 8px;
         }
-
         nav a {
-            margin-left: 25px;
-            font-weight: bold;
-            color: #FFEDA8;
-            text-decoration: none;
-            transition: .3s;
+          margin-left: 12px;
+          font-size: 0.95em;
         }
-
-        nav a:hover:not(.active) {
-            color: #FFD166;
-        }
-
-        nav a.active {
-            border-bottom: 3px solid #FFD166;
-            padding-bottom: 5px;
-        }
-
-        /* TITEL */
-        .page-title {
-            text-align: center;
-            padding: 80px 20px;
-        }
-
         .page-title h1 {
-            font-size: 50px;
-            color: #FFD166;
+          font-size: 36px;
         }
-
         .contact-wrapper {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+          padding: 0 16px 50px;
+          gap: 20px;
         }
-
         .contact-card {
-            background: #00544B;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+          padding: 20px;
         }
-
         .contact-card h2 {
-            color: #FFD166;
-            margin-bottom: 16px;
-            font-size: 28px;
+          font-size: 22px;
         }
-
         .contact-card p,
         .contact-card li,
         .contact-card label,
         .contact-card a {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #FFEDA8;
+          font-size: 15px;
         }
+      }
 
-        .contact-card ul {
-            list-style: none;
+      @media (max-width: 600px) {
+        header {
+          font-size: 18px;
+          padding: 10px 14px;
         }
-
-        .contact-card li + li {
-            margin-top: 10px;
+        header img {
+          height: 52px;
         }
-
+        nav {
+          margin-top: 8px;
+        }
+        nav a {
+          margin-left: 10px;
+          font-size: 0.88em;
+        }
+        .page-title h1 {
+          font-size: 28px;
+        }
+        .page-title {
+          padding: 48px 14px 32px;
+        }
+        .contact-wrapper {
+          padding: 0 10px 36px;
+          gap: 14px;
+        }
+        .contact-card {
+          padding: 16px;
+          border-radius: 14px;
+        }
+        .contact-card h2 {
+          font-size: 19px;
+          margin-bottom: 12px;
+        }
+        .contact-card p,
+        .contact-card li,
+        .contact-card label,
         .contact-card a {
-            text-decoration: underline;
+          font-size: 14px;
         }
-
         .mail-note {
-            display: grid;
-            gap: 14px;
+          gap: 10px;
         }
-
         .mail-cta {
-            display: inline-block;
-            padding: 12px 20px;
-            border-radius: 10px;
-            background: linear-gradient(45deg,#FFD166,#FFB703);
-            color: #003631;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
+          font-size: 14px;
+          padding: 10px 12px;
         }
+      }
 
-        /* ----- RESPONSIVENESS ----- */
-        @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                padding: 12px 18px;
-                font-size: 22px;
-            }
-            nav {
-                margin-top: 8px;
-            }
-            nav a {
-                margin-left: 12px;
-                font-size: 0.95em;
-            }
-            .page-title h1 {
-                font-size: 36px;
-            }
-            .contact-wrapper {
-                padding: 0 16px 50px;
-                gap: 20px;
-            }
-            .contact-card {
-                padding: 20px;
-            }
-            .contact-card h2 {
-                font-size: 22px;
-            }
-            .contact-card p,
-            .contact-card li,
-            .contact-card label,
-            .contact-card a {
-                font-size: 15px;
-            }
-        }
+      footer {
+        background: #00231f;
+        text-align: center;
+        padding: 30px;
+        margin-top: 50px;
+      }
 
-        @media (max-width: 600px) {
-            header {
-                font-size: 18px;
-                padding: 10px 14px;
-            }
-            header img {
-                height: 52px;
-            }
-            nav {
-                margin-top: 8px;
-            }
-            nav a {
-                margin-left: 10px;
-                font-size: 0.88em;
-            }
-            .page-title h1 {
-                font-size: 28px;
-            }
-            .page-title {
-                padding: 48px 14px 32px;
-            }
-            .contact-wrapper {
-                padding: 0 10px 36px;
-                gap: 14px;
-            }
-            .contact-card {
-                padding: 16px;
-                border-radius: 14px;
-            }
-            .contact-card h2 {
-                font-size: 19px;
-                margin-bottom: 12px;
-            }
-            .contact-card p,
-            .contact-card li,
-            .contact-card label,
-            .contact-card a {
-                font-size: 14px;
-            }
-            .mail-note {
-                gap: 10px;
-            }
-            .mail-cta {
-                font-size: 14px;
-                padding: 10px 12px;
-            }
-        }
+      footer p {
+        color: #a5a5a5;
+        font-size: 14px;
+      }
 
-        footer{
-            background:#00231F;
-            text-align:center;
-            padding:30px;
-            margin-top:50px;
-        }
+      .footer-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
 
-        footer p{
-            color:#A5A5A5;
-            font-size:14px;
-        }
-
-        .footer-links {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #FFEDA8;
-            text-decoration: underline;
-            font-size: 14px;
-        }
+      .footer-links a {
+        color: #ffeda8;
+        text-decoration: underline;
+        font-size: 14px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <img src="BasteltrineCOLOR.png" alt="Logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="produkte.html">Produkte</a>
-            <a href="kontakt.html" class="active">Kontakt</a>
-        </nav>
+      <img src="BasteltrineCOLOR.png" alt="Logo" />
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="produkte.html">Produkte</a>
+        <a href="reviews.html">Rezensionen</a>
+        <a href="kontakt.html" class="active">Kontakt</a>
+        <a href="cart.html"
+          >Warenkorb <span class="nav-icon">🛒</span
+          ><span id="cartNavBadge" class="cart-badge"></span
+        ></a>
+      </nav>
     </header>
 
     <section class="page-title">
-        <h1>Kontakt</h1>
+      <h1>Kontakt</h1>
     </section>
 
     <section class="contact-wrapper">
-        <div class="contact-card">
-            <h2>So erreichst du uns</h2>
-            <ul>
-                <li>E-Mail: <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a></li>
-                <li>Telefon: <a href="tel:+49151541663300">+49 151 541663300</a></li>
-                <li>Instagram: <a href="https://www.instagram.com/die_basteltrine_/" target="_blank" rel="noopener noreferrer">@die_basteltrine_</a></li>
-                <li>Facebook: <a href="https://www.facebook.com/die.basteltrine" onclick="openFacebook(event, 'https://www.facebook.com/die.basteltrine', 'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine')">Zur Facebook-Seite</a></li>
-            </ul>
-        </div>
+      <div class="contact-card">
+        <h2>So erreichst du uns</h2>
+        <ul>
+          <li>
+            E-Mail:
+            <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a>
+          </li>
+          <li>Telefon: <a href="tel:+4915154166330">+49 151 54166330</a></li>
+          <li>
+            Instagram:
+            <a
+              href="https://www.instagram.com/die_basteltrine_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >@die_basteltrine_</a
+            >
+          </li>
+          <li>
+            Facebook:
+            <a
+              href="https://www.facebook.com/die.basteltrine"
+              onclick="
+                openFacebook(
+                  event,
+                  'https://www.facebook.com/die.basteltrine',
+                  'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine',
+                )
+              "
+              >Zur Facebook-Seite</a
+            >
+          </li>
+        </ul>
+      </div>
 
-        <div class="contact-card">
-            <h2>Infos für Bestellungen</h2>
-            <p>Du möchtest ein Produkt personalisieren oder hast eine eigene Idee? Schreib einfach kurz, was du dir wünschst. Angaben zu Farben, Namen, Anlass und Termin helfen besonders.</p>
-            <p>Viele Anfragen lassen sich auch kurzfristig umsetzen, bei größeren Sonderanfertigungen lohnt sich aber eine frühe Nachricht.</p>
-        </div>
+      <div class="contact-card">
+        <h2>Infos für Bestellungen</h2>
+        <p>
+          Du möchtest ein Produkt personalisieren oder hast eine eigene Idee?
+          Schreib einfach kurz, was du dir wünschst. Angaben zu Farben, Namen,
+          Anlass und Termin helfen besonders.
+        </p>
+        <p>
+          Viele Anfragen lassen sich auch kurzfristig umsetzen, bei größeren
+          Sonderanfertigungen lohnt sich aber eine frühe Nachricht.
+        </p>
+      </div>
 
-        <div class="contact-card">
-            <h2>Persönliche Anfrage</h2>
-            <div class="mail-note">
-                <p>Für persönliche Anfragen, Sonderwünsche oder Bestellungen schreib uns einfach direkt per E-Mail.</p>
-                <p>Am besten mit ein paar Infos zu deinem Wunsch, zum Anlass und falls wichtig auch zum gewünschten Termin.</p>
-                <a class="mail-cta" href="mailto:basteltrine@magenta.de?subject=Pers%C3%B6nliche%20Anfrage">Per E-Mail anfragen</a>
-            </div>
+      <div class="contact-card">
+        <h2>Persönliche Anfrage</h2>
+        <div class="mail-note">
+          <p>
+            Für persönliche Anfragen, Sonderwünsche oder Bestellungen schreib
+            uns einfach direkt per E-Mail.
+          </p>
+          <p>
+            Am besten mit ein paar Infos zu deinem Wunsch, zum Anlass und falls
+            wichtig auch zum gewünschten Termin.
+          </p>
+          <a
+            class="mail-cta"
+            href="mailto:basteltrine@magenta.de?subject=Pers%C3%B6nliche%20Anfrage"
+            >Per E-Mail anfragen</a
+          >
         </div>
+      </div>
     </section>
 
     <script>
-        function openFacebook(event, webUrl, appUrl) {
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      function openFacebook(event, webUrl, appUrl) {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-            if (!isMobile) {
-                return;
-            }
-
-            event.preventDefault();
-
-            const start = Date.now();
-            window.location.href = appUrl;
-
-            setTimeout(function () {
-                if (Date.now() - start < 1500) {
-                    window.location.href = webUrl;
-                }
-            }, 700);
+        if (!isMobile) {
+          return;
         }
+
+        event.preventDefault();
+
+        const start = Date.now();
+        window.location.href = appUrl;
+
+      setTimeout(function () {
+        if (Date.now() - start < 1500) {
+          window.location.href = webUrl;
+        }
+      }, 700);
+    }
+  </script>
+
+    <script>
+      (function () {
+        const storageKey = "basteltrine-cart";
+        const badge = document.getElementById("cartNavBadge");
+
+        function updateBadge() {
+          if (!badge) {
+            return;
+          }
+          let count = 0;
+          try {
+            const stored = JSON.parse(localStorage.getItem(storageKey) || "{}");
+            count = Object.values(stored).reduce(function (sum, entry) {
+              return sum + (entry.qty || 0);
+            }, 0);
+          } catch (error) {
+            console.error("Fehler beim Lesen des Warenkorbs:", error);
+          }
+          badge.textContent = count;
+          badge.style.display = count ? "inline-block" : "none";
+        }
+
+        updateBadge();
+        window.addEventListener("storage", function (event) {
+          if (event.key === storageKey) {
+            updateBadge();
+          }
+        });
+      })();
     </script>
 
-<footer>
-    <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
-    <div class="footer-links">
+    <footer>
+      <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+      <div class="footer-links">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
-    </div>
-</footer>
-
-</body>
+      </div>
+    </footer>
+  </body>
 </html>

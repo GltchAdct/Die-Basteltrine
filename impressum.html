@@ -1,216 +1,276 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Impressum - Die Basteltrine</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #003631;
-            color: #FFEDA8;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background: #003631;
+        color: #ffeda8;
+      }
 
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background: #00231f;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        font-size: 30px;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      nav a {
+        margin-left: 25px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #ffeda8;
+        transition: color 0.3s;
+      }
+
+      .cart-badge {
+        background: #ffd166;
+        color: #00231f;
+        border-radius: 999px;
+        padding: 2px 6px;
+        margin-left: 4px;
+        font-size: 0.8em;
+        font-weight: bold;
+        display: none;
+      }
+
+      .nav-icon {
+        margin-left: 6px;
+        font-size: 0.9em;
+      }
+
+      nav a:hover,
+      nav a.active {
+        color: #ffd166;
+      }
+
+      .page-title {
+        text-align: center;
+        padding: 60px 20px 30px;
+      }
+
+      .page-title h1 {
+        font-size: 50px;
+        color: #ffd166;
+      }
+
+      .legal-card {
+        max-width: 900px;
+        margin: 0 auto 60px;
+        padding: 30px;
+        background: #00544b;
+        border-radius: 16px;
+        line-height: 1.7;
+      }
+
+      .legal-card h2 {
+        color: #ffd166;
+        margin-bottom: 14px;
+        margin-top: 24px;
+      }
+
+      .legal-card h2:first-child {
+        margin-top: 0;
+      }
+
+      .legal-card p,
+      .legal-card a {
+        font-size: 18px;
+        color: #ffeda8;
+      }
+
+      .legal-card a {
+        text-decoration: underline;
+      }
+
+      footer {
+        background: #00231f;
+        text-align: center;
+        padding: 30px;
+        margin-top: 50px;
+      }
+
+      footer p {
+        color: #a5a5a5;
+        font-size: 14px;
+      }
+
+      .footer-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: #ffeda8;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+
+      @media (max-width: 900px) {
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background: #00231F;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            font-size: 30px;
+          flex-direction: column;
+          padding: 12px 18px;
+          font-size: 22px;
         }
 
-        header img {
-            height: 60px;
+        nav {
+          margin-top: 8px;
         }
 
         nav a {
-            margin-left: 25px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #FFEDA8;
-            transition: color .3s;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: #FFD166;
-        }
-
-        .page-title {
-            text-align: center;
-            padding: 60px 20px 30px;
+          margin-left: 12px;
+          font-size: 0.95em;
         }
 
         .page-title h1 {
-            font-size: 50px;
-            color: #FFD166;
+          font-size: 34px;
         }
 
         .legal-card {
-            max-width: 900px;
-            margin: 0 auto 60px;
-            padding: 30px;
-            background: #00544B;
-            border-radius: 16px;
-            line-height: 1.7;
-        }
-
-        .legal-card h2 {
-            color: #FFD166;
-            margin-bottom: 14px;
-            margin-top: 24px;
-        }
-
-        .legal-card h2:first-child {
-            margin-top: 0;
+          margin: 0 16px 40px;
+          padding: 22px;
         }
 
         .legal-card p,
         .legal-card a {
-            font-size: 18px;
-            color: #FFEDA8;
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        header {
+          font-size: 18px;
+          padding: 10px 14px;
         }
 
+        header img {
+          height: 52px;
+        }
+
+        nav {
+          margin-top: 8px;
+        }
+
+        nav a {
+          margin-left: 10px;
+          font-size: 0.88em;
+        }
+
+        .page-title h1 {
+          font-size: 28px;
+        }
+
+        .legal-card {
+          margin: 0 10px 30px;
+          padding: 18px;
+        }
+
+        .legal-card p,
         .legal-card a {
-            text-decoration: underline;
+          font-size: 14px;
         }
-
-        footer {
-            background: #00231F;
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-        }
-
-        footer p {
-            color: #A5A5A5;
-            font-size: 14px;
-        }
-
-        .footer-links {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #FFEDA8;
-            text-decoration: underline;
-            font-size: 14px;
-        }
-
-        @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                padding: 12px 18px;
-                font-size: 22px;
-            }
-
-            nav {
-                margin-top: 8px;
-            }
-
-            nav a {
-                margin-left: 12px;
-                font-size: 0.95em;
-            }
-
-            .page-title h1 {
-                font-size: 34px;
-            }
-
-            .legal-card {
-                margin: 0 16px 40px;
-                padding: 22px;
-            }
-
-            .legal-card p,
-            .legal-card a {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            header {
-                font-size: 18px;
-                padding: 10px 14px;
-            }
-
-            header img {
-                height: 52px;
-            }
-
-            nav {
-                margin-top: 8px;
-            }
-
-            nav a {
-                margin-left: 10px;
-                font-size: 0.88em;
-            }
-
-            .page-title h1 {
-                font-size: 28px;
-            }
-
-            .legal-card {
-                margin: 0 10px 30px;
-                padding: 18px;
-            }
-
-            .legal-card p,
-            .legal-card a {
-                font-size: 14px;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <img src="BasteltrineCOLOR.png" alt="Logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="produkte.html">Produkte</a>
-            <a href="kontakt.html">Kontakt</a>
-            <a href="impressum.html" class="active">Impressum</a>
-        </nav>
+      <img src="BasteltrineCOLOR.png" alt="Logo" />
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="produkte.html">Produkte</a>
+        <a href="reviews.html">Rezensionen</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html" class="active">Impressum</a>
+        <a href="cart.html"
+          >Warenkorb <span class="nav-icon">🛒</span
+          ><span id="cartNavBadge" class="cart-badge"></span
+        ></a>
+      </nav>
     </header>
 
     <section class="page-title">
-        <h1>Impressum</h1>
+      <h1>Impressum</h1>
     </section>
 
     <section class="legal-card">
-        <h2>Angaben gemäß § 5 TMG</h2>
-        <p>Marko Letz<br>Str. der Opfer des Faschismus 6<br>38820 Halberstadt</p>
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Marko Letz<br />Str. der Opfer des Faschismus 6<br />38820 Halberstadt
+      </p>
 
-        <h2>Kontakt</h2>
-        <p>E-Mail: <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a><br>Telefon: <a href="tel:+49151541663300">+49 151 541663300</a></p>
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail:
+        <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a
+        ><br />Telefon: <a href="tel:+49151541663300">+49 151 541663300</a>
+      </p>
 
-        <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-        <p>Marko Letz<br>Str. der Opfer des Faschismus 6<br>38820 Halberstadt</p>
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>
+        Marko Letz<br />Str. der Opfer des Faschismus 6<br />38820 Halberstadt
+      </p>
     </section>
 
+    <script>
+      (function () {
+        const storageKey = "basteltrine-cart";
+        const badge = document.getElementById("cartNavBadge");
+
+        function updateBadge() {
+          if (!badge) {
+            return;
+          }
+          let count = 0;
+          try {
+            const stored = JSON.parse(localStorage.getItem(storageKey) || "{}");
+            count = Object.values(stored).reduce(function (sum, entry) {
+              return sum + (entry.qty || 0);
+            }, 0);
+          } catch (error) {
+            console.error("Fehler beim Lesen des Warenkorbs:", error);
+          }
+          badge.textContent = count;
+          badge.style.display = count ? "inline-block" : "none";
+        }
+
+        updateBadge();
+        window.addEventListener("storage", function (event) {
+          if (event.key === storageKey) {
+            updateBadge();
+          }
+        });
+      })();
+    </script>
+
     <footer>
-        <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
-        <div class="footer-links">
-            <a href="impressum.html">Impressum</a>
-            <a href="datenschutz.html">Datenschutz</a>
-        </div>
+      <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+      <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
     </footer>
-</body>
+  </body>
 </html>

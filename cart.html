@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warenkorb - Die Basteltrine</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #003631;
+        color: #ffeda8;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background: #00231f;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        font-size: 30px;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      nav a {
+        margin-left: 25px;
+        font-weight: bold;
+        color: #ffeda8;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      nav a:hover,
+      nav a.active {
+        color: #ffd166;
+      }
+
+      .nav-icon {
+        margin-left: 6px;
+        font-size: 0.9em;
+      }
+
+      .cart-badge {
+        background: #ffd166;
+        color: #00231f;
+        border-radius: 999px;
+        padding: 2px 6px;
+        margin-left: 4px;
+        font-size: 0.8em;
+        font-weight: bold;
+        display: inline-block;
+      }
+
+      .page-title {
+        text-align: center;
+        padding: 80px 20px 40px;
+      }
+
+      .page-title h1 {
+        font-size: 50px;
+        color: #ffd166;
+      }
+
+      .page-title p {
+        font-size: 18px;
+        max-width: 800px;
+        margin: 10px auto 0;
+      }
+
+      .panel {
+        max-width: 900px;
+        margin: 0 auto 60px;
+        background: #00544b;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        line-height: 1.8;
+      }
+
+      .panel h2 {
+        color: #ffd166;
+        margin-bottom: 14px;
+      }
+
+      .panel ul {
+        margin-left: 24px;
+        margin-bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .panel a {
+        color: #ffeda8;
+        text-decoration: underline;
+      }
+
+      .cart-grid {
+        max-width: 960px;
+        margin: 0 auto 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .cart-grid h2 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #ffd166;
+      }
+
+      .cart-grid ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        min-height: 160px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 16px;
+      }
+
+      .cart-grid li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+      }
+
+      .cart-grid li:last-child {
+        border-bottom: none;
+      }
+
+      .cart-grid img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .cart-info {
+        flex: 1;
+      }
+
+      .cart-info strong {
+        display: block;
+        font-size: 16px;
+      }
+
+      .cart-info span {
+        font-size: 14px;
+        color: #ffeda8;
+      }
+
+      .cart-line-total {
+        font-size: 14px;
+        color: #ffd166;
+        font-weight: bold;
+      }
+
+      .cart-summary {
+        font-size: 18px;
+        color: #ffd166;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .panel-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 10px;
+        font-size: 16px;
+        padding: 12px 22px;
+        border-radius: 12px;
+        background: #ffd166;
+        color: #003631;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .panel-link-email {
+        background: linear-gradient(135deg, #e5b73a, #c48e1c);
+      }
+
+      .panel-link-whatsapp {
+        background: linear-gradient(135deg, #24a75f, #0e8a3f);
+        color: #fff8ee;
+      }
+
+      .panel-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .panel-link.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .cart-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .cart-actions .note {
+        font-size: 14px;
+        color: #ffeda8;
+        opacity: 0.9;
+      }
+
+      .order-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .order-info label {
+        font-size: 14px;
+        color: #ffeda8;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-weight: bold;
+      }
+
+      .required-indicator {
+        color: #ffb703;
+        font-weight: bold;
+        margin-left: 4px;
+      }
+
+      .order-info input,
+      .order-info textarea {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: none;
+        background: rgba(255, 255, 255, 0.95);
+        font: inherit;
+        color: #00231f;
+      }
+
+      .order-info textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      .order-error {
+        min-height: 20px;
+        font-size: 14px;
+        color: #ffb703;
+      }
+
+      .cart-remove-btn {
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        background: transparent;
+        color: #ffeda8;
+        border-radius: 8px;
+        padding: 4px 10px;
+        cursor: pointer;
+      }
+
+      footer {
+        background: #00231f;
+        text-align: center;
+        padding: 30px;
+        margin-top: 50px;
+      }
+
+      footer p {
+        color: #a5a5a5;
+        font-size: 14px;
+      }
+
+      .footer-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: #ffeda8;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="BasteltrineCOLOR.png" alt="Logo" />
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="produkte.html">Produkte</a>
+        <a href="reviews.html">Rezensionen</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="cart.html" class="active"
+          >Warenkorb <span class="nav-icon">🛒</span
+          ><span id="cartNavBadge" class="cart-badge">0</span></a
+        >
+      </nav>
+    </header>
+
+    <section class="page-title">
+      <h1>Warenkorb</h1>
+      <p>
+        Du siehst hier nur die Übersicht. Produkte fügst du auf der Produktseite
+        hinzu. Sobald du fertig bist, schick die Bestellung per E-Mail oder über
+        WhatsApp ab.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>So funktioniert der Warenkorb</h2>
+      <ul>
+        <li>
+          Wähle auf der <a href="produkte.html">Produktseite</a> die Artikel
+          aus, die du bestellen möchtest.
+        </li>
+        <li>
+          Der Warenkorb merkt sich die Auswahl und zeigt dir den Gesamtpreis.
+        </li>
+        <li>
+          Im Anschluss füllst du Name, E-Mail und Wunschhinweis aus und klickst
+          auf „Bestellung per E-Mail senden“.
+        </li>
+      </ul>
+      <p>
+        Die Bestellung geht dann direkt als E-Mail an
+        <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a>.
+        Alternativ kannst du die Produktauswahl per WhatsApp teilen.
+      </p>
+    </section>
+
+    <section class="panel cart-grid">
+      <div>
+        <h2>Aktuelle Auswahl</h2>
+        <ul id="cartOverview">
+          <li>Keine Produkte im Warenkorb.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Gesamtsumme</h2>
+        <p id="cartSummary">0,00 €</p>
+        <p>
+          Wenn du fertig bist, gib noch Name, E-Mail und einen Wunschhinweis an.
+          Danach kannst du die Bestellung per E-Mail oder WhatsApp absenden.
+        </p>
+        <div class="order-info">
+          <label class="required">
+            Name
+            <span class="required-indicator">*</span>
+            <input id="orderName" type="text" placeholder="z. B. Maria Müller" />
+          </label>
+          <label class="required">
+            Ihre E-Mail
+            <span class="required-indicator">*</span>
+            <input
+              id="orderEmail"
+              type="email"
+              placeholder="name.beispiel@email.com"
+            />
+          </label>
+          <label class="required">
+            Wunschhinweis
+            <span class="required-indicator">*</span>
+            <textarea
+              id="orderNote"
+              placeholder="z.B. Bitte anpassen/mit Name gravieren"
+            ></textarea>
+          </label>
+          <label>
+            Telefon (optional)
+            <input id="orderPhone" type="tel" placeholder="+49 123 456789" />
+          </label>
+        </div>
+        <p id="orderError" class="order-error"></p>
+        <div class="cart-actions">
+          <a
+            id="cartMail"
+            class="panel-link panel-link-email"
+            href="mailto:basteltrine@magenta.de?subject=Bestellung%20Die%20Basteltrine"
+            >Bestellung per E-Mail schicken</a
+          >
+          <a
+            id="cartWhatsApp"
+            class="panel-link panel-link-whatsapp"
+            href="https://wa.me/?text=Ich%20möchte%20eine%20Bestellung%20aufgeben"
+            target="_blank"
+            rel="noopener"
+            >Per WhatsApp teilen</a
+          >
+          <p class="note">
+            Nach Klick öffnet sich dein Standardprogramm mit der Bestellübersicht.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+      <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </footer>
+
+    <script>
+      const storageKey = "basteltrine-cart";
+      const cartNavBadge = document.getElementById("cartNavBadge");
+      const cartOverview = document.getElementById("cartOverview");
+      const cartSummary = document.getElementById("cartSummary");
+      const cartMail = document.getElementById("cartMail");
+      const cartWhatsApp = document.getElementById("cartWhatsApp");
+      const orderName = document.getElementById("orderName");
+      const orderEmail = document.getElementById("orderEmail");
+      const orderNote = document.getElementById("orderNote");
+      const orderPhone = document.getElementById("orderPhone");
+      const orderError = document.getElementById("orderError");
+
+      const products = [
+        { id: 1, name: "Beton-Aufsteller", price: 18.5, image: "produkt1.png" },
+        {
+          id: 2,
+          name: "Dekotablett Natur",
+          price: 14.9,
+          image: "produkt2.jpg",
+        },
+        {
+          id: 3,
+          name: "Geschenkset Klein",
+          price: 24.99,
+          image: "produkt3.png",
+        },
+        {
+          id: 4,
+          name: "Hochzeitsaufsteller",
+          price: 29.0,
+          image: "produkt4.png",
+        },
+        {
+          id: 5,
+          name: "Kerzenhalter Gold",
+          price: 12.0,
+          image: "produkt5.png",
+        },
+        { id: 6, name: "Lampe Stern", price: 34.5, image: "produkt6.png" },
+        { id: 7, name: "Shirt mit Namen", price: 27.9, image: "produkt2.jpg" },
+        { id: 8, name: "Plastalin-Schale", price: 16.4, image: "produkt3.png" },
+        {
+          id: 9,
+          name: "Bunter Schlüsselanhänger",
+          price: 6.5,
+          image: "produkt1.png",
+        },
+        {
+          id: 10,
+          name: "Stofftasche Blumen",
+          price: 19.9,
+          image: "produkt4.png",
+        },
+        {
+          id: 11,
+          name: "Trinkglas Gravur",
+          price: 11.8,
+          image: "produkt5.png",
+        },
+        {
+          id: 12,
+          name: "Vorratsglas Etikett",
+          price: 13.6,
+          image: "produkt6.png",
+        },
+      ];
+
+      function formatCurrency(value) {
+        return (
+          value.toLocaleString("de-DE", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }) + " €"
+        );
+      }
+
+      function loadCartData() {
+        const payload = localStorage.getItem(storageKey);
+        if (!payload) {
+          return {};
+        }
+        try {
+          return JSON.parse(payload);
+        } catch {
+          return {};
+        }
+      }
+
+      function persistCartData(cart) {
+        localStorage.setItem(storageKey, JSON.stringify(cart));
+      }
+
+      function buildCartLines(cart) {
+        return Object.keys(cart)
+          .map(function (productId) {
+            const product = products.find(function (item) {
+              return item.id === Number(productId);
+            });
+            if (!product) {
+              return null;
+            }
+            const qty = cart[productId].qty;
+            return {
+              id: product.id,
+              name: product.name,
+              qty: qty,
+              total: product.price * qty,
+              unitPrice: product.price,
+              image: product.image,
+            };
+          })
+          .filter(Boolean);
+      }
+
+      let currentLines = [];
+
+      function getOrderInfo() {
+        const info = [
+          `Name: ${orderName?.value.trim() || "-"}`,
+          `E-Mail: ${orderEmail?.value.trim() || "-"}`,
+        ];
+        const phoneValue = orderPhone?.value.trim();
+        if (phoneValue) {
+          info.push(`Telefon: ${phoneValue}`);
+        }
+        info.push(`Hinweis: ${orderNote?.value.trim() || "-"}`);
+        return info;
+      }
+
+      function isEmailValid(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
+      }
+
+      function hasRequiredOrderInfo() {
+        if (!orderName || !orderEmail) {
+          return false;
+        }
+        const name = orderName.value.trim();
+        const email = orderEmail.value.trim();
+        return Boolean(name && email && isEmailValid(email));
+      }
+
+      function setOrderError(message) {
+        if (orderError) {
+          orderError.textContent = message;
+        }
+      }
+
+      function updateButtonsState() {
+        const valid = hasRequiredOrderInfo();
+        [cartMail, cartWhatsApp].forEach(function (button) {
+          if (!button) {
+            return;
+          }
+          button.classList.toggle("disabled", !valid);
+        });
+        setOrderError(
+          valid ? "" : "Bitte Name und gültige E-Mail-Adresse eingeben.",
+        );
+        return valid;
+      }
+
+      function updateOrderLinks(lines) {
+        currentLines = lines;
+        const productLines = lines.map(function (line) {
+          return `${line.name} × ${line.qty}`;
+        });
+        const infoLines = getOrderInfo();
+        const bodyLines = [
+          "Bestellung von mir",
+          "",
+          ...infoLines,
+          "",
+          "Produkte:",
+          ...productLines,
+        ];
+        const waLines = [
+          "Hallo, ich sende folgende Bestellung:",
+          "",
+          ...infoLines,
+          "",
+          ...productLines,
+        ];
+
+        const mailBody = encodeURIComponent(bodyLines.join("\n"));
+        const waBody = encodeURIComponent(waLines.join("\n"));
+
+        cartMail.href = `mailto:basteltrine@magenta.de?subject=${encodeURIComponent(
+          "Bestellung Die Basteltrine",
+        )}&body=${mailBody}`;
+        cartWhatsApp.href = `https://wa.me/?text=${waBody}`;
+        updateButtonsState();
+      }
+
+      function updateNavBadge(cart) {
+        if (!cartNavBadge) {
+          return;
+        }
+        const count = Object.values(cart).reduce(function (sum, entry) {
+          return sum + entry.qty;
+        }, 0);
+        cartNavBadge.textContent = count;
+        cartNavBadge.style.display = count ? "inline-block" : "none";
+      }
+
+      function renderCart() {
+        const cart = loadCartData();
+        const lines = buildCartLines(cart);
+        updateOrderLinks(lines);
+        if (!lines.length) {
+          cartOverview.innerHTML = "<li>Warenkorb ist leer.</li>";
+        } else {
+          cartOverview.innerHTML = lines
+            .map(function (line) {
+              const lineTotal = formatCurrency(line.total);
+              const unitLabel = formatCurrency(line.unitPrice);
+              return `
+                        <li>
+                            <img src="${line.image}" alt="${line.name}">
+                            <div class="cart-info">
+                                <strong>${line.name}</strong>
+                                <span>${line.qty} × ${unitLabel}</span>
+                                <span class="cart-line-total">Gesamt: ${lineTotal}</span>
+                            </div>
+                            <button type="button" class="cart-remove-btn" data-remove="${line.id}">Entfernen</button>
+                        </li>`;
+            })
+            .join("");
+        }
+
+        const total = lines.reduce(function (sum, line) {
+          return sum + line.total;
+        }, 0);
+        cartSummary.textContent = formatCurrency(total);
+        updateNavBadge(cart);
+
+        cartOverview.querySelectorAll("[data-remove]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            const cart = loadCartData();
+            const id = String(button.dataset.remove);
+            if (!cart[id]) {
+              return;
+            }
+            cart[id].qty -= 1;
+            if (cart[id].qty <= 0) {
+              delete cart[id];
+            }
+            persistCartData(cart);
+            renderCart();
+          });
+        });
+      }
+
+      renderCart();
+      function handleSendClick(event) {
+        if (!hasRequiredOrderInfo()) {
+          event.preventDefault();
+          setOrderError("Bitte Name und gültige E-Mail-Adresse eingeben.");
+        }
+      }
+      [cartMail, cartWhatsApp].forEach(function (button) {
+        if (!button) {
+          return;
+        }
+        button.addEventListener("click", handleSendClick);
+      });
+      [orderName, orderEmail, orderNote, orderPhone].forEach(function (input) {
+        if (!input) {
+          return;
+        }
+        input.addEventListener("input", function () {
+          updateOrderLinks(currentLines);
+        });
+      });
+      window.addEventListener("storage", function (event) {
+        if (event.key === storageKey) {
+          renderCart();
+        }
+      });
+    </script>
+  </body>
+</html>

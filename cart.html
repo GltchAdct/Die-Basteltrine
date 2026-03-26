@@ -20,8 +20,8 @@
 
       header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 30px;
         background: #00231f;
         position: sticky;
@@ -36,12 +36,41 @@
         gap: 12px;
       }
 
+      header img {
+        height: 60px;
+      }
+
+      nav {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+      }
+
+      nav a {
+        font-weight: bold;
+        color: #ffeda8;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 2px;
+      }
+
+      nav a.active {
+        border-bottom: 3px solid #ffd166;
+        padding-bottom: 5px;
+      }
+
+      nav a:hover {
+        color: #ffd166;
+      }
+
       .menu-button {
-        width: 40px;
-        height: 40px;
-        border: 2px solid rgba(255, 255, 255, 0.65);
-        border-radius: 50%;
-        background: transparent;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.08);
         display: none;
         flex-direction: column;
         justify-content: center;
@@ -51,33 +80,21 @@
       }
 
       .menu-button span {
-        width: 20px;
+        width: 22px;
         height: 2px;
         background: #ffeda8;
         transition: transform 0.2s ease;
       }
 
-      header img {
-        height: 60px;
-      }
-
-      nav {
-        display: flex;
-        gap: 28px;
-        align-items: center;
-      }
-
-      nav a {
-        margin-left: 25px;
-        font-weight: bold;
-        color: #ffeda8;
-        text-decoration: none;
-        transition: 0.3s;
-      }
-
-      nav a:hover,
-      nav a.active {
-        color: #ffd166;
+      #navBackdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        z-index: 80;
+        display: none;
       }
 
       .nav-icon {
@@ -96,15 +113,47 @@
         display: inline-block;
       }
 
-      #navBackdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.25s ease;
-        z-index: 80;
-        display: none;
+      @media (max-width: 900px) {
+        nav {
+          position: fixed;
+          right: 16px;
+          top: 70px;
+          background: rgba(0, 0, 0, 0.9);
+          padding: 18px 26px;
+          border-radius: 18px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.25s ease;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+          pointer-events: none;
+        }
+        nav a {
+          margin-left: 0;
+          font-size: 0.95em;
+        }
+        .menu-button {
+          display: flex;
+        }
+        body.menu-open nav {
+          transform: scaleY(1);
+          pointer-events: auto;
+        }
+        body.menu-open #navBackdrop {
+          display: block;
+          opacity: 1;
+        }
+        body.menu-open .menu-button span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        body.menu-open .menu-button span:nth-child(2) {
+          opacity: 0;
+        }
+        body.menu-open .menu-button span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
       }
 
       .page-title {
@@ -278,62 +327,6 @@
         opacity: 0.9;
       }
 
-      @media (max-width: 900px) {
-        header {
-          flex-direction: column;
-          padding: 12px 18px;
-          font-size: 22px;
-        }
-        nav {
-          margin-top: 0;
-          position: fixed;
-          right: 16px;
-          top: 70px;
-          background: rgba(0, 0, 0, 0.9);
-          padding: 18px 26px;
-          border-radius: 18px;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          transform: scaleY(0);
-          transform-origin: top;
-          transition: transform 0.25s ease;
-          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-          pointer-events: none;
-          z-index: 90;
-        }
-        nav a {
-          margin-left: 0;
-          font-size: 0.95em;
-        }
-        .menu-button {
-          display: flex;
-        }
-        body.menu-open nav {
-          transform: scaleY(1);
-          pointer-events: auto;
-        }
-        body.menu-open #navBackdrop {
-          display: block;
-          opacity: 1;
-        }
-        body.menu-open .menu-button span:nth-child(1) {
-          transform: translateY(6px) rotate(45deg);
-        }
-        body.menu-open .menu-button span:nth-child(2) {
-          opacity: 0;
-        }
-        body.menu-open .menu-button span:nth-child(3) {
-          transform: translateY(-6px) rotate(-45deg);
-        }
-        .cart-grid {
-          grid-template-columns: 1fr;
-        }
-        .cart-grid ul {
-          min-height: auto;
-        }
-      }
-
       .order-status {
         font-size: 14px;
         color: #a5ffc8;
@@ -424,22 +417,25 @@
   <body>
     <header>
       <div class="logo-group">
-        <img src="BasteltrineCOLOR.png" alt="Logo" />
-        <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a class="logo-link" href="index.html">
+          <img src="BasteltrineCOLOR.png" alt="Logo" />
+        </a>
       </div>
       <nav id="mainNav" aria-label="Hauptnavigation">
         <a href="index.html">Home</a>
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="datenschutz.html">Datenschutz</a>
         <a href="cart.html" class="active"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge">0</span></a>
       </nav>
+      <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 
@@ -926,27 +922,29 @@
     </script>
 
     <script>
-      const menuToggle = document.getElementById("menuToggle");
-      const mainNav = document.getElementById("mainNav");
-      const navBackdrop = document.getElementById("navBackdrop");
+      (function () {
+        const menuToggle = document.getElementById("menuToggle");
+        const navBackdrop = document.getElementById("navBackdrop");
+        const mainNav = document.getElementById("mainNav");
 
-      function closeMenu() {
-        document.body.classList.remove("menu-open");
-        if (menuToggle) {
-          menuToggle.setAttribute("aria-expanded", "false");
+        function closeMenu() {
+          document.body.classList.remove("menu-open");
+          if (menuToggle) {
+            menuToggle.setAttribute("aria-expanded", "false");
+          }
         }
-      }
 
-      menuToggle?.addEventListener("click", function () {
-        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", String(!expanded));
-        document.body.classList.toggle("menu-open");
-      });
+        menuToggle?.addEventListener("click", function () {
+          const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+          menuToggle.setAttribute("aria-expanded", String(!expanded));
+          document.body.classList.toggle("menu-open");
+        });
 
-      navBackdrop?.addEventListener("click", closeMenu);
-      mainNav?.querySelectorAll("a").forEach(function (link) {
-        link.addEventListener("click", closeMenu);
-      });
+        navBackdrop?.addEventListener("click", closeMenu);
+        mainNav?.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+      })();
     </script>
   </body>
 </html>

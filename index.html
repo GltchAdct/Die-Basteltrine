@@ -24,11 +24,10 @@
         color: inherit;
       }
 
-      /* HEADER */
       header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 30px;
         background: #00231f;
         position: sticky;
@@ -37,33 +36,57 @@
         font-size: 30px;
       }
 
-      header img {
-        height: 60px;
-      }
-
       .logo-group {
         display: flex;
         align-items: center;
         gap: 12px;
       }
 
+      header img {
+        height: 60px;
+      }
+
+      nav {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+      }
+
+      nav a {
+        font-weight: bold;
+        color: #ffeda8;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 2px;
+      }
+
+      nav a.active {
+        border-bottom: 3px solid #ffd166;
+        padding-bottom: 5px;
+      }
+
+      nav a:hover {
+        color: #ffd166;
+      }
+
       .menu-button {
-        width: 40px;
-        height: 40px;
-        border: 2px solid rgba(255, 255, 255, 0.65);
-        border-radius: 50%;
-        background: transparent;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.08);
         display: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 5px;
         cursor: pointer;
-        transition: border 0.2s ease;
       }
 
       .menu-button span {
-        width: 20px;
+        width: 22px;
         height: 2px;
         background: #ffeda8;
         transition: transform 0.2s ease;
@@ -78,19 +101,6 @@
         transition: opacity 0.25s ease;
         z-index: 80;
         display: none;
-      }
-
-      nav {
-        display: flex;
-        gap: 28px;
-        align-items: center;
-      }
-
-      nav a {
-        margin-left: 25px;
-        font-weight: bold;
-        transition: color 0.3s;
-        position: relative;
       }
 
       .cart-badge {
@@ -109,13 +119,47 @@
         font-size: 0.9em;
       }
 
-      nav a:hover {
-        color: #ffd166;
-      }
-
-      nav a.active {
-        border-bottom: 3px solid #ffd166;
-        padding-bottom: 5px;
+      @media (max-width: 900px) {
+        nav {
+          position: fixed;
+          right: 16px;
+          top: 70px;
+          background: rgba(0, 0, 0, 0.9);
+          padding: 18px 26px;
+          border-radius: 18px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.25s ease;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+          pointer-events: none;
+        }
+        nav a {
+          margin-left: 0;
+          font-size: 0.95em;
+        }
+        .menu-button {
+          display: flex;
+        }
+        body.menu-open nav {
+          transform: scaleY(1);
+          pointer-events: auto;
+        }
+        body.menu-open #navBackdrop {
+          display: block;
+          opacity: 1;
+        }
+        body.menu-open .menu-button span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        body.menu-open .menu-button span:nth-child(2) {
+          opacity: 0;
+        }
+        body.menu-open .menu-button span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
       }
 
       /* HERO */
@@ -339,364 +383,90 @@
       }
 
       /* ----- RESPONSIVENESS ----- */
-      @media (max-width: 900px) {
-        header {
-          flex-direction: column;
-          padding: 12px 18px;
-          font-size: 22px;
-        }
-        nav {
-          margin-top: 0;
-          position: fixed;
-          right: 16px;
-          top: 70px;
-          background: rgba(0, 0, 0, 0.9);
-          padding: 18px 26px;
-          border-radius: 18px;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          transform: scaleY(0);
-          transform-origin: top;
-          transition: transform 0.25s ease;
-          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-          pointer-events: none;
-          z-index: 90;
-        }
-        nav a {
-          margin-left: 0;
-          font-size: 0.95em;
-        }
-        .menu-button {
-          display: flex;
-        }
-        body.menu-open nav {
-          transform: scaleY(1);
-          pointer-events: auto;
-        }
-        body.menu-open #navBackdrop {
-          display: block;
-          opacity: 1;
-        }
-        body.menu-open .menu-button span:nth-child(1) {
-          transform: translateY(6px) rotate(45deg);
-        }
-        body.menu-open .menu-button span:nth-child(2) {
-          opacity: 0;
-        }
-        body.menu-open .menu-button span:nth-child(3) {
-          transform: translateY(-6px) rotate(-45deg);
-        }
-        .hero h1 {
-          font-size: 46px;
-        }
-        .hero p {
-          font-size: 0.98em;
-        }
-        .opening-info {
-          font-size: 0.92em;
-          padding: 12px 14px;
-          margin: 24px 16px;
-        }
-        .intro h2 {
-          font-size: 30px;
-        }
-        .intro p {
-          font-size: 17px;
-        }
-        .highlights {
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 18px;
-          padding: 28px 14px;
-        }
-        .product-card {
-          max-width: 100%;
-          padding: 16px;
-        }
-        .product-card h3 {
-          font-size: 1rem;
-        }
-        .product-card p {
-          font-size: 0.88em;
-        }
-        .product-link {
-          font-size: 0.88em;
-          padding: 8px 14px;
-        }
-        .warnings h2 {
-          font-size: 32px;
-        }
-        .warnings h1 {
-          font-size: 26px;
-        }
-        .warnings p,
-        .warnings ul,
-        .warnings .warning-copy {
-          font-size: 17px;
-        }
-      }
-
-      @media (max-width: 600px) {
-        header {
-          font-size: 18px;
-          padding: 10px 14px;
-        }
-        header img {
-          height: 52px;
-        }
-        nav {
-          margin-top: 8px;
-        }
-        nav a {
-          margin-left: 10px;
-          font-size: 0.88em;
-        }
-        .hero {
-          padding: 52px 14px 36px;
-        }
-        .hero h1 {
-          font-size: 32px;
-        }
-        .hero p {
-          font-size: 0.88em;
-        }
-        .opening-info {
-          font-size: 0.84em;
-          padding: 10px 12px;
-          margin: 18px 10px;
-        }
-        .social-link {
-          gap: 4px;
-          margin: 4px 2px;
-        }
-        .social-icon {
-          width: 16px;
-          height: 16px;
-        }
-        .intro h2 {
-          font-size: 24px;
-        }
-        .intro p {
-          font-size: 15px;
-        }
-        .highlights {
-          grid-template-columns: 1fr;
-          padding: 18px 10px;
-          gap: 12px;
-        }
-        .highlights h2 {
-          font-size: 28px;
-          margin-bottom: 20px;
-        }
-        .product-card {
-          padding: 14px;
-        }
-        .product-card p {
-          font-size: 0.84em;
-        }
-        .warnings h2,
-        .warnings h1 {
-          font-size: 22px;
-        }
-        .warnings p,
-        .warnings ul li {
-          font-size: 14px;
-        }
-        .warnings .warning-copy {
-          font-size: 14px;
-        }
-        footer p {
-          font-size: 12px;
-        }
-      }
+      
     </style>
   </head>
-
   <body>
     <header>
       <div class="logo-group">
-        <img src="BasteltrineCOLOR.png" alt="Logo" />
-        <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a class="logo-link" href="index.html">
+          <img src="BasteltrineCOLOR.png" alt="Logo" />
+        </a>
       </div>
       <nav id="mainNav" aria-label="Hauptnavigation">
-        <a href="index.html" class="active">Homepage</a>
+        <a href="index.html" class="active">Home</a>
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="datenschutz.html">Datenschutz</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
         ></a>
       </nav>
+      <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 
     <section class="hero">
       <h1>Die Basteltrine</h1>
-      <p>Alles für deine kreativen Ideen - handgemacht und einzigartig!</p>
+      <p>Alles für deine kreativen Ideen – handgemacht, personalisiert und mit Liebe verpackt.</p>
+      <div class="cta">
+        <a href="produkte.html">Jetzt stöbern</a>
+      </div>
     </section>
 
-    <!-- Öffnungszeiten Info -->
     <section class="opening-info">
       <p>
-        Unsere Öffnungszeiten variieren. Aktuelle Infos findest du auf
-        <a
-          class="social-link"
-          href="https://www.facebook.com/die.basteltrine"
-          onclick="
-            openFacebook(
-              event,
-              'https://www.facebook.com/die.basteltrine',
-              'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine',
-            )
-          "
-        >
-          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.022 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.017 1.792-4.685 4.533-4.685 1.313 0 2.686.236 2.686.236v2.963H15.83c-1.49 0-1.955.928-1.955 1.88v2.258h3.328l-.532 3.49h-2.796V24C19.612 23.095 24 18.1 24 12.073z"
-            />
-          </svg>
-          Facebook
-        </a>
-        oder in unserer
-        <a
-          class="social-link"
-          href="https://whatsapp.com/channel/0029VbC8lGIDOQIOhJWQ2w2l"
-          onclick="
-            openWhatsApp(
-              event,
-              'https://whatsapp.com/channel/0029VbC8lGIDOQIOhJWQ2w2l',
-              'whatsapp://channel/0029VbC8lGIDOQIOhJWQ2w2l',
-            )
-          "
-        >
-          <svg class="social-icon" viewBox="0 0 32 32" aria-hidden="true">
-            <path
-              d="M19.11 17.205c-.372-.186-1.1-.543-1.27-.605-.17-.062-.294-.093-.418.093-.124.186-.48.605-.59.729-.108.124-.217.14-.403.047-.186-.093-.785-.289-1.495-.923-.552-.492-.925-1.1-1.033-1.286-.108-.186-.01-.287.083-.38.084-.083.186-.217.279-.326.093-.108.124-.186.186-.31.062-.124.03-.233-.016-.326-.046-.093-.418-1.008-.573-1.384-.15-.36-.303-.31-.418-.316l-.356-.006c-.124 0-.326.047-.496.233-.17.186-.65.636-.65 1.55s.666 1.798.76 1.922c.093.124 1.31 2.002 3.176 2.808.444.192.79.306 1.06.392.445.142.85.122 1.17.074.357-.053 1.1-.45 1.255-.884.155-.434.155-.806.108-.884-.046-.077-.17-.124-.356-.217m-3.084 4.109h-.002a5.605 5.605 0 0 1-2.854-.782l-.205-.122-2.12.556.566-2.067-.134-.212a5.607 5.607 0 0 1-.857-2.99c.001-3.1 2.523-5.621 5.625-5.621 1.5.001 2.91.585 3.972 1.648a5.58 5.58 0 0 1 1.647 3.97c-.001 3.1-2.523 5.62-5.623 5.62m4.782-10.399A6.72 6.72 0 0 0 16.048 9a6.74 6.74 0 0 0-6.745 6.738 6.7 6.7 0 0 0 .91 3.367L9 23l4.01-1.052a6.75 6.75 0 0 0 3.038.727h.003a6.74 6.74 0 0 0 6.745-6.737 6.7 6.7 0 0 0-1.988-4.783M16.048 0C7.2 0 0 7.2 0 16.048c0 3.18.93 6.144 2.528 8.636L0 32l7.557-2.48a15.96 15.96 0 0 0 8.49 2.43h.006C24.9 31.95 32 24.75 32 15.902 32 7.054 24.9 0 16.048 0"
-            />
-          </svg>
-          WhatsApp-Community </a
-        >.
+        Wir liefern persönliche Geschenkideen, Deko- und Wohnaccessoires direkt zu dir nach Hause.
+        Schau dir unsere Highlights an oder nimm direkt Kontakt für Sonderwünsche auf.
       </p>
     </section>
 
     <section class="intro">
-      <h2>Mit Liebe handgemacht</h2>
+      <h2>Handgemachte Details für jeden Anlass</h2>
       <p>
-        Bei uns findest du kreative Geschenkideen, Dekorationen und
-        personalisierte Kleinigkeiten für besondere Momente. Jedes Produkt wird
-        mit viel Sorgfalt gefertigt und kann auf Wunsch individuell angepasst
-        werden.
+        Unser Sortiment umfasst Beton-Aufsteller, gravierte Gläser, Geschenksets und saisonale Dekoration.
+        Wir fertigen auf Bestellung, damit jedes Stück einzigartig bleibt.
       </p>
     </section>
 
     <section class="highlights">
-      <h2>Beliebte Produkte</h2>
-
       <div class="product-card">
-        <img src="produkt1.png" alt="Produkt 1" />
-        <h3>Aufsteller Kita Abschied</h3>
-        <p>
-          Wunderschöne handgemachte Dekoration für einen besonderen
-          Kita-Abschied.
-        </p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+        <img src="produkt1.png" alt="Beton-Aufsteller" />
+        <h3>Beton-Aufsteller</h3>
+        <p>Robuster Blickfang mit Name oder Datum – perfekt für dein Regal oder Geschenk.</p>
+        <a class="product-link" href="produkte.html">Mehr erfahren</a>
       </div>
-
       <div class="product-card">
-        <img src="produkt2.jpg" alt="Produkt 2" />
-        <h3>Handgemachtes Geschenk</h3>
-        <p>Liebevoll gefertigt mit hochwertigen Materialien.</p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+        <img src="produkt2.jpg" alt="Dekotablett" />
+        <h3>Dekotablett Natur</h3>
+        <p>Natürliche Texturen und warme Farben, ideal zum Präsentieren oder Sammeln.</p>
+        <a class="product-link" href="produkte.html">Mehr erfahren</a>
       </div>
-
       <div class="product-card">
-        <img src="produkt3.png" alt="Produkt 3" />
-        <h3>Personalisierte Deko</h3>
-        <p>
-          Individuell gestaltet für Geburtstage, Einschulung oder als kleines
-          Geschenk.
-        </p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
-      </div>
-
-      <div class="product-card">
-        <img src="produkt4.png" alt="Produkt 4" />
-        <h3>Saisonale Bastelidee</h3>
-        <p>
-          Passend für Feste und Jahreszeiten, handgemacht und mit viel Liebe
-          dekoriert.
-        </p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
-      </div>
-
-      <div class="product-card">
-        <img src="produkt5.png" alt="Produkt 5" />
-        <h3>Kleines Mitbringsel</h3>
-        <p>Eine schöne Aufmerksamkeit für Familie, Freunde oder Kolleginnen.</p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
-      </div>
-
-      <div class="product-card">
-        <img src="produkt6.png" alt="Produkt 6" />
-        <h3>Individuelle Anfertigung</h3>
-        <p>
-          Du hast eine Idee? Viele Produkte können auf Wunsch angepasst werden.
-        </p>
-        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+        <img src="produkt3.png" alt="Geschenkset" />
+        <h3>Geschenkset Klein</h3>
+        <p>Kleines Glück mit Kerze, Deko und persönlicher Botschaft – liebevoll verpackt.</p>
+        <a class="product-link" href="produkte.html">Mehr erfahren</a>
       </div>
     </section>
 
     <section class="warnings">
-      <h2>Wichtige Hinweise</h2>
+      <h2>Hinweis</h2>
       <p>
-        Da viele Artikel handgemacht und personalisierbar sind, können
-        Bearbeitungszeit und Verfügbarkeit je nach Produkt variieren.
+        Holz ist ein Naturprodukt und kann Farbunterschiede aufweisen. Achtung Splittergefahr.
+        Nicht in der Nähe einer Kerze verwenden oder aufstellen. Kerzen nie unbeaufsichtigt lassen.
+        Dekoration an der Kerze bitte vor dem Anzünden entfernen. Bei unsachgemäßem Gebrauch erfolgt keine Haftung.
       </p>
-      <div class="warning-copy">
-        <p>
-          Alle Produkte sind in liebevoller Handarbeit hergestellt. Es kann
-          durchaus zu kleinen Luftbläschen in den Produkten kommen. Diese sind
-          leider nicht immer zu verhindern und sind kein Reklamationsgrund.
-        </p>
-        <p>
-          Hersteller:<br />Marko Letz<br />Str. der Opfer des Faschismus 6<br />38820
-          Halberstadt<br />basteltrine@magenta.de
-        </p>
-        <p>
-          Produktsicherheit und Warnhinweise:<br />Gegossen mit Gießpulver von
-          Plastalin Super, Venus Arm und Beton. Nicht für Kinder geeignet, da
-          Kleinteile verschluckt werden können. Bitte nur mit einem leicht
-          feuchten Tuch säubern. Bei Bruch oder Fall besteht Verletzungsgefahr.
-        </p>
-        <p>
-          Kerzenhalter sind nur kurzzeitig hitzebeständig. Kerzen nie ganz
-          abbrennen lassen und möglichst batteriebetriebene Kerzen verwenden.
-          PLA-Filament-3D-Drucke sind nicht für Kinder unter 12 Jahren geeignet.
-          Die Produkte sind temperatur- und witterungsbeständig und teilweise
-          auch für den Außenbereich geeignet.
-        </p>
-        <p>
-          Holz ist ein Naturprodukt und kann Farbunterschiede aufweisen. Achtung
-          Splittergefahr. Nicht in der Nähe einer Kerze verwenden oder
-          aufstellen. Kerzen nie unbeaufsichtigt lassen. Dekoration an der Kerze
-          bitte vor dem Anzünden entfernen. Bei unsachgemäßem Gebrauch erfolgt
-          keine Haftung.
-        </p>
-      </div>
+    </section>
 
-      <h1>Du suchst etwas ganz Bestimmtes?</h1>
-      <p>
-        Dann melde dich gern über die Kontaktseite. Gemeinsam finden wir eine
-        passende kreative Lösung.
-      </p>
-      <div class="cta">
-        <a href="kontakt.html">Jetzt Kontakt aufnehmen</a>
-      </div>
+    <section class="cta">
+      <a href="kontakt.html">Jetzt Kontakt aufnehmen</a>
     </section>
 
     <script>
@@ -771,28 +541,30 @@
     </script>
 
     <script>
-      const menuToggle = document.getElementById("menuToggle");
-      const mainNav = document.getElementById("mainNav");
-      const navBackdrop = document.getElementById("navBackdrop");
+      (function () {
+        const menuToggle = document.getElementById("menuToggle");
+        const navBackdrop = document.getElementById("navBackdrop");
+        const mainNav = document.getElementById("mainNav");
 
-      function closeMenu() {
-        document.body.classList.remove("menu-open");
-        if (menuToggle) {
-          menuToggle.setAttribute("aria-expanded", "false");
+        function closeMenu() {
+          document.body.classList.remove("menu-open");
+          if (menuToggle) {
+            menuToggle.setAttribute("aria-expanded", "false");
+          }
         }
-      }
 
-      menuToggle?.addEventListener("click", function () {
-        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", String(!expanded));
-        document.body.classList.toggle("menu-open");
-      });
+        menuToggle?.addEventListener("click", function () {
+          const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+          menuToggle.setAttribute("aria-expanded", String(!expanded));
+          document.body.classList.toggle("menu-open");
+        });
 
-      navBackdrop?.addEventListener("click", closeMenu);
+        navBackdrop?.addEventListener("click", closeMenu);
 
-      mainNav?.querySelectorAll("a").forEach(function (link) {
-        link.addEventListener("click", closeMenu);
-      });
+        mainNav?.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+      })();
     </script>
 
     <footer>

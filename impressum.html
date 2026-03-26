@@ -20,8 +20,8 @@
 
       header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 30px;
         background: #00231f;
         position: sticky;
@@ -30,22 +30,47 @@
         font-size: 30px;
       }
 
-      header img {
-        height: 60px;
-      }
-
       .logo-group {
         display: flex;
         align-items: center;
         gap: 12px;
       }
 
+      header img {
+        height: 60px;
+      }
+
+      nav {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+      }
+
+      nav a {
+        font-weight: bold;
+        color: #ffeda8;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 2px;
+      }
+
+      nav a.active {
+        border-bottom: 3px solid #ffd166;
+        padding-bottom: 5px;
+      }
+
+      nav a:hover {
+        color: #ffd166;
+      }
+
       .menu-button {
-        width: 40px;
-        height: 40px;
-        border: 2px solid rgba(255, 255, 255, 0.65);
-        border-radius: 50%;
-        background: transparent;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.08);
         display: none;
         flex-direction: column;
         justify-content: center;
@@ -55,35 +80,10 @@
       }
 
       .menu-button span {
-        width: 20px;
+        width: 22px;
         height: 2px;
         background: #ffeda8;
         transition: transform 0.2s ease;
-      }
-
-      nav {
-        display: flex;
-        gap: 28px;
-        align-items: center;
-      }
-
-      nav a {
-        margin-left: 25px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #ffeda8;
-        transition: color 0.3s;
-      }
-
-      .cart-badge {
-        background: #ffd166;
-        color: #00231f;
-        border-radius: 999px;
-        padding: 2px 6px;
-        margin-left: 4px;
-        font-size: 0.8em;
-        font-weight: bold;
-        display: none;
       }
 
       #navBackdrop {
@@ -102,9 +102,15 @@
         font-size: 0.9em;
       }
 
-      nav a:hover,
-      nav a.active {
-        color: #ffd166;
+      .cart-badge {
+        background: #ffd166;
+        color: #00231f;
+        border-radius: 999px;
+        padding: 2px 6px;
+        margin-left: 4px;
+        font-size: 0.8em;
+        font-weight: bold;
+        display: none;
       }
 
       .page-title {
@@ -283,24 +289,27 @@
   <body>
     <header>
       <div class="logo-group">
-        <img src="BasteltrineCOLOR.png" alt="Logo" />
-        <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a class="logo-link" href="index.html">
+          <img src="BasteltrineCOLOR.png" alt="Logo" />
+        </a>
       </div>
       <nav id="mainNav" aria-label="Hauptnavigation">
         <a href="index.html">Home</a>
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="datenschutz.html">Datenschutz</a>
         <a href="impressum.html" class="active">Impressum</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
         ></a>
       </nav>
+      <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 
@@ -359,27 +368,29 @@
     </script>
 
     <script>
-      const menuToggle = document.getElementById("menuToggle");
-      const mainNav = document.getElementById("mainNav");
-      const navBackdrop = document.getElementById("navBackdrop");
+      (function () {
+        const menuToggle = document.getElementById("menuToggle");
+        const navBackdrop = document.getElementById("navBackdrop");
+        const mainNav = document.getElementById("mainNav");
 
-      function closeMenu() {
-        document.body.classList.remove("menu-open");
-        if (menuToggle) {
-          menuToggle.setAttribute("aria-expanded", "false");
+        function closeMenu() {
+          document.body.classList.remove("menu-open");
+          if (menuToggle) {
+            menuToggle.setAttribute("aria-expanded", "false");
+          }
         }
-      }
 
-      menuToggle?.addEventListener("click", function () {
-        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", String(!expanded));
-        document.body.classList.toggle("menu-open");
-      });
+        menuToggle?.addEventListener("click", function () {
+          const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+          menuToggle.setAttribute("aria-expanded", String(!expanded));
+          document.body.classList.toggle("menu-open");
+        });
 
-      navBackdrop?.addEventListener("click", closeMenu);
-      mainNav?.querySelectorAll("a").forEach(function (link) {
-        link.addEventListener("click", closeMenu);
-      });
+        navBackdrop?.addEventListener("click", closeMenu);
+        mainNav?.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+      })();
     </script>
 
     <footer>

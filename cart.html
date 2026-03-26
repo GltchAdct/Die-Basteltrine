@@ -206,6 +206,11 @@
         color: #fff8ee;
       }
 
+      .panel-link-submit {
+        background: linear-gradient(135deg, #0d3c64, #1b8f4c);
+        color: #fff8ee;
+      }
+
       .panel-link:hover {
         transform: translateY(-2px);
         box-shadow: 0 14px 24px rgba(0, 0, 0, 0.3);
@@ -227,6 +232,13 @@
         font-size: 14px;
         color: #ffeda8;
         opacity: 0.9;
+      }
+
+      .order-status {
+        font-size: 14px;
+        color: #a5ffc8;
+        min-height: 20px;
+        margin-top: 6px;
       }
 
       .order-info {
@@ -413,10 +425,14 @@
             rel="noopener"
             >Per WhatsApp teilen</a
           >
+          <button id="cartSubmit" class="panel-link panel-link-submit" type="button">
+            Bestellung absenden
+          </button>
           <p class="note">
-            Nach Klick öffnet sich dein Standardprogramm mit der Bestellübersicht.
+            Die Bestellung wird direkt an uns geschickt und du erhältst eine Bestätigung per Mail.
           </p>
         </div>
+        <p id="orderStatus" class="order-status"></p>
       </div>
     </section>
 
@@ -440,6 +456,10 @@
       const orderNote = document.getElementById("orderNote");
       const orderPhone = document.getElementById("orderPhone");
       const orderError = document.getElementById("orderError");
+      const orderSubmit = document.getElementById("cartSubmit");
+      const orderStatus = document.getElementById("orderStatus");
+      const ORDER_SUBMIT_DEFAULT = "Bestellung absenden";
+      const ORDER_SUBMIT_LOADING = "Bestellung wird gesendet…";
 
       const products = [
         { id: 1, name: "Beton-Aufsteller", price: 18.5, image: "produkt1.png" },
@@ -571,24 +591,39 @@
         return Boolean(name && email && isEmailValid(email));
       }
 
+      function setOrderStatus(message) {
+        if (orderStatus) {
+          orderStatus.textContent = message;
+        }
+      }
+
       function setOrderError(message) {
         if (orderError) {
           orderError.textContent = message;
+        }
+        if (message && orderStatus) {
+          orderStatus.textContent = "";
         }
       }
 
       function updateButtonsState() {
         const valid = hasRequiredOrderInfo();
+        const hasItems = currentLines.length > 0;
         [cartMail, cartWhatsApp].forEach(function (button) {
           if (!button) {
             return;
           }
           button.classList.toggle("disabled", !valid);
         });
+        if (orderSubmit) {
+          const disabled = !valid || !hasItems;
+          orderSubmit.disabled = disabled;
+          orderSubmit.classList.toggle("disabled", disabled);
+        }
         setOrderError(
           valid ? "" : "Bitte Name und gültige E-Mail-Adresse eingeben.",
         );
-        return valid;
+        return valid && hasItems;
       }
 
       function updateOrderLinks(lines) {
@@ -621,6 +656,71 @@
         )}&body=${mailBody}`;
         cartWhatsApp.href = `https://wa.me/?text=${waBody}`;
         updateButtonsState();
+      }
+
+      async function submitOrder() {
+        if (!currentLines.length) {
+          setOrderError("Bitte füge zuerst Produkte zum Warenkorb hinzu.");
+          return;
+        }
+        if (!hasRequiredOrderInfo()) {
+          setOrderError("Bitte Name und gültige E-Mail-Adresse eingeben.");
+          return;
+        }
+        setOrderStatus("Wir senden deine Bestellung...");
+        setOrderError("");
+        if (orderSubmit) {
+          orderSubmit.disabled = true;
+          orderSubmit.textContent = ORDER_SUBMIT_LOADING;
+        }
+        const sanitizedLines = currentLines.map(function (line) {
+          return {
+            id: line.id,
+            name: line.name,
+            qty: line.qty,
+            unitPrice: Number(line.unitPrice),
+            total: Number(line.total),
+          };
+        });
+        const total = sanitizedLines.reduce(function (sum, line) {
+          return sum + line.total;
+        }, 0);
+        const payload = {
+          customer: {
+            name: orderName?.value.trim() || "",
+            email: orderEmail?.value.trim() || "",
+            phone: orderPhone?.value.trim() || "",
+            note: orderNote?.value.trim() || "",
+          },
+          lines: sanitizedLines,
+          total: total,
+          createdAt: new Date().toISOString(),
+          source: "web",
+        };
+
+        try {
+          const response = await fetch("/api/order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text || "Fehler beim Versenden der Bestellung.");
+          }
+          setOrderStatus("Bestellung abgeschickt. Du erhältst gleich eine Bestätigung per Mail.");
+          persistCartData({});
+          renderCart();
+        } catch (error) {
+          setOrderError(
+            error.message || "Beim Versenden der Bestellung ist ein Fehler aufgetreten.",
+          );
+        } finally {
+          if (orderSubmit) {
+            orderSubmit.disabled = false;
+            orderSubmit.textContent = ORDER_SUBMIT_DEFAULT;
+          }
+        }
       }
 
       function updateNavBadge(cart) {
@@ -683,7 +783,15 @@
       }
 
       renderCart();
+      if (orderSubmit) {
+        orderSubmit.addEventListener("click", submitOrder);
+      }
       function handleSendClick(event) {
+        if (!currentLines.length) {
+          event.preventDefault();
+          setOrderError("Bitte lege erst Produkte in den Warenkorb.");
+          return;
+        }
         if (!hasRequiredOrderInfo()) {
           event.preventDefault();
           setOrderError("Bitte Name und gültige E-Mail-Adresse eingeben.");

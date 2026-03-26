@@ -32,7 +32,7 @@
         background: #00231f;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 140;
         font-size: 30px;
       }
 
@@ -52,6 +52,9 @@
         align-items: center;
         justify-content: center;
         gap: 28px;
+        position: relative;
+        z-index: 145;
+        max-width: min(100%, 360px);
       }
 
       nav a {
@@ -99,7 +102,7 @@
         pointer-events: none;
         opacity: 0;
         transition: opacity 0.25s ease;
-        z-index: 80;
+        z-index: 120;
         display: none;
       }
 
@@ -398,7 +401,6 @@
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
-        <a href="datenschutz.html">Datenschutz</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
@@ -414,7 +416,7 @@
 
     <section class="hero">
       <h1>Die Basteltrine</h1>
-      <p>Alles für deine kreativen Ideen – handgemacht, personalisiert und mit Liebe verpackt.</p>
+      <p>Alles für deine kreativen Ideen – handgemacht und einzigartig!</p>
       <div class="cta">
         <a href="produkte.html">Jetzt stöbern</a>
       </div>
@@ -422,8 +424,14 @@
 
     <section class="opening-info">
       <p>
-        Wir liefern persönliche Geschenkideen, Deko- und Wohnaccessoires direkt zu dir nach Hause.
-        Schau dir unsere Highlights an oder nimm direkt Kontakt für Sonderwünsche auf.
+        Unsere Öffnungszeiten variieren. Aktuelle Infos findest du auf
+        <a
+          class="social-link"
+          href="https://www.facebook.com/die.basteltrine"
+          target="_blank"
+          rel="noopener"
+        >Facebook</a>
+        und per WhatsApp.
       </p>
     </section>
 
@@ -436,6 +444,7 @@
     </section>
 
     <section class="highlights">
+      <h2>Unsere Highlights</h2>
       <div class="product-card">
         <img src="produkt1.png" alt="Beton-Aufsteller" />
         <h3>Beton-Aufsteller</h3>

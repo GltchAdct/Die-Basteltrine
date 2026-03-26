@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rezensionen - Die Basteltrine</title>
+    <title>Die Basteltrine</title>
 
     <style>
       * {
@@ -16,8 +16,15 @@
         font-family: Arial, sans-serif;
         background: #003631;
         color: #ffeda8;
+        scroll-behavior: smooth;
       }
 
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* HEADER */
       header {
         display: flex;
         justify-content: space-between;
@@ -34,21 +41,56 @@
         height: 60px;
       }
 
+      .logo-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .menu-button {
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgba(255, 255, 255, 0.65);
+        border-radius: 50%;
+        background: transparent;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        transition: border 0.2s ease;
+      }
+
+      .menu-button span {
+        width: 20px;
+        height: 2px;
+        background: #ffeda8;
+        transition: transform 0.2s ease;
+      }
+
+      #navBackdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        z-index: 80;
+        display: none;
+      }
+
+      nav {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+
       nav a {
         margin-left: 25px;
         font-weight: bold;
-        color: #ffeda8;
-        text-decoration: none;
         transition: color 0.3s;
-      }
-
-      nav a:hover {
-        color: #ffd166;
-      }
-
-      nav a.active {
-        border-bottom: 3px solid #ffd166;
-        padding-bottom: 5px;
+        position: relative;
       }
 
       .cart-badge {
@@ -62,224 +104,212 @@
         display: none;
       }
 
-      .page-head {
+      .nav-icon {
+        margin-left: 6px;
+        font-size: 0.9em;
+      }
+
+      nav a:hover {
+        color: #ffd166;
+      }
+
+      nav a.active {
+        border-bottom: 3px solid #ffd166;
+        padding-bottom: 5px;
+      }
+
+      /* HERO */
+      .hero {
         text-align: center;
         padding: 80px 20px;
       }
 
-      .page-head h1 {
-        font-size: 48px;
+      .hero h1 {
+        font-size: 72px;
+        margin-bottom: 20px;
         color: #ffd166;
       }
 
-      .page-head p {
-        font-size: 20px;
-        margin-top: 12px;
+      .hero p {
+        font-size: 1.2em;
+        color: #ffd166;
       }
 
-      .container {
+      /* OPENING INFO */
+      .opening-info {
+        text-align: center;
+        margin: 30px 20px;
+        padding: 15px 20px;
+        background: #00544b;
+        border-radius: 12px;
+        font-size: 1em;
+        color: #ffd166;
+      }
+
+      .opening-info a {
+        color: #ffb703;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin: 0 4px;
+      }
+
+      .social-icon {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+        flex-shrink: 0;
+      }
+
+      .intro {
         max-width: 1000px;
         margin: 0 auto;
-        padding: 0 20px 60px;
-      }
-
-      .form-card {
-        background: #00544b;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        margin-bottom: 40px;
-      }
-
-      .form-card h2 {
-        color: #ffd166;
-        margin-bottom: 16px;
-      }
-
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 14px;
-        margin-bottom: 16px;
-      }
-
-      label {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        font-weight: bold;
-      }
-
-      input,
-      textarea,
-      select {
-        border: none;
-        border-radius: 10px;
-        padding: 10px 14px;
-        font: inherit;
-        background: rgba(255, 255, 255, 0.95);
-        color: #00231f;
-      }
-
-      textarea {
-        min-height: 100px;
-        resize: vertical;
-      }
-
-      .required-indicator {
-        color: #ffb703;
-        font-weight: bold;
-        margin-left: 4px;
-      }
-
-      .order-error {
-        min-height: 20px;
-        color: #ffb703;
-        margin-bottom: 12px;
-      }
-
-      .publish-toggle {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 14px;
-        font-weight: bold;
-        font-size: 16px;
-      }
-
-      .form-card button {
-        background: linear-gradient(135deg, #ffd166, #ffb703);
-        border: none;
-        border-radius: 12px;
-        color: #003631;
-        font-weight: bold;
-        padding: 12px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-        transition: transform 0.2s ease;
-      }
-
-      .form-card button:hover {
-        transform: translateY(-2px);
-      }
-
-      .mail-hint {
-        margin-top: 10px;
-        font-size: 14px;
-        color: #ffb703;
-      }
-
-      .reviews-grid {
-        background: #00544b;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-      }
-
-      .reviews-grid h3 {
-        font-size: 22px;
-        color: #ffd166;
-        margin-bottom: 18px;
-      }
-
-      .empty-state {
-        font-size: 16px;
-        line-height: 1.5;
-      }
-
-      .review-list {
-        display: grid;
-        gap: 18px;
-      }
-
-      .review-card {
-        padding: 18px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        position: relative;
-      }
-
-      .review-card span {
-        font-size: 13px;
-        color: #a5ffc8;
-      }
-
-      .review-card button {
-        align-self: flex-start;
-        padding: 6px 12px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        background: transparent;
-        color: #ffd166;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.2s ease;
-      }
-
-      .review-card button:hover {
-        background: rgba(255, 209, 102, 0.2);
-      }
-
-      .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 200;
-        padding: 20px;
-      }
-
-      .overlay.active {
-        display: flex;
-      }
-
-      .overlay-content {
-        background: #00544b;
-        border-radius: 18px;
-        padding: 24px;
-        max-width: 420px;
-        width: 100%;
+        padding: 10px 20px 20px;
         text-align: center;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
       }
 
-      .overlay-content button {
-        margin-top: 14px;
-        padding: 10px 16px;
-        border-radius: 999px;
-        border: none;
-        font-weight: bold;
+      .intro h2 {
+        font-size: 40px;
+        color: #ffd166;
+        margin-bottom: 16px;
+      }
+
+      .intro p {
+        font-size: 20px;
+        line-height: 1.7;
+      }
+
+      /* PRODUKTE */
+      .highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+        gap: 30px;
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: auto;
+        justify-content: center;
+      }
+
+      .highlights h2 {
+        grid-column: 1/-1;
+        text-align: center;
+        font-size: 40px;
+        margin-bottom: 30px;
+      }
+
+      .product-card {
+        background: #00544b;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
         cursor: pointer;
       }
 
-      .overlay-actions {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 18px;
-        flex-wrap: wrap;
+      .product-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow:
+          0 15px 30px rgba(255, 209, 102, 0.5),
+          0 10px 20px rgba(0, 0, 0, 0.3);
       }
 
-      .overlay-actions button:first-of-type {
-        background: linear-gradient(135deg, #ffd166, #ffb703);
+      .product-card img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .product-card h3 {
+        margin-bottom: 10px;
+      }
+
+      .product-card p {
+        margin-bottom: 15px;
+        font-size: 0.95em;
+      }
+
+      .product-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(45deg, #ffd166, #ffb703);
+        border-radius: 8px;
+        font-weight: bold;
         color: #003631;
+        transition: 0.3s;
       }
 
-      .overlay-actions button:last-of-type {
-        background: #003631;
-        border: 1px solid #ffd166;
-        color: #ffd166;
+      .product-link:hover {
+        transform: translateY(-3px) scale(1.05);
       }
 
-      .review-card p {
-        line-height: 1.5;
+      .cta {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .cta a {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(45deg, #ffd166, #ffb703);
+        color: #003631;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+
+      /* HINWEISE */
+      .warnings {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .warnings h2 {
+        text-align: center;
+        border-top: 2px solid #ffeda8;
+        margin-bottom: 30px;
+        padding-top: 10px;
+        font-size: 40px;
+      }
+
+      .warnings h1 {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 30px;
+      }
+
+      .warnings p,
+      .warnings ul {
+        max-width: 1000px;
+        margin: auto;
+        font-size: 20px;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .warnings .warning-copy {
+        max-width: 1000px;
+        margin: 24px auto 0;
+        font-size: 20px;
+        line-height: 1.7;
+        text-align: center;
+      }
+
+      .warnings ul {
+        list-style: none;
+        margin-top: 20px;
+      }
+
+      .warnings li {
+        margin-bottom: 12px;
       }
 
       footer {
@@ -289,402 +319,488 @@
         margin-top: 50px;
       }
 
-      footer a {
-        color: #ffeda8;
-        text-decoration: underline;
-        margin: 0 6px;
+      footer p {
+        color: #a5a5a5;
+        font-size: 14px;
       }
 
+      .footer-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: #ffeda8;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+
+      /* ----- RESPONSIVENESS ----- */
       @media (max-width: 900px) {
         header {
           flex-direction: column;
+          padding: 12px 18px;
+          font-size: 22px;
         }
-        .form-grid {
-          grid-template-columns: 1fr;
+        nav {
+          margin-top: 0;
+          position: fixed;
+          right: 16px;
+          top: 70px;
+          background: rgba(0, 0, 0, 0.9);
+          padding: 18px 26px;
+          border-radius: 18px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.25s ease;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+          pointer-events: none;
+          z-index: 90;
+        }
+        nav a {
+          margin-left: 0;
+          font-size: 0.95em;
+        }
+        .menu-button {
+          display: flex;
+        }
+        body.menu-open nav {
+          transform: scaleY(1);
+          pointer-events: auto;
+        }
+        body.menu-open #navBackdrop {
+          display: block;
+          opacity: 1;
+        }
+        body.menu-open .menu-button span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        body.menu-open .menu-button span:nth-child(2) {
+          opacity: 0;
+        }
+        body.menu-open .menu-button span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+        .hero h1 {
+          font-size: 46px;
+        }
+        .hero p {
+          font-size: 0.98em;
+        }
+        .opening-info {
+          font-size: 0.92em;
+          padding: 12px 14px;
+          margin: 24px 16px;
+        }
+        .intro h2 {
+          font-size: 30px;
+        }
+        .intro p {
+          font-size: 17px;
+        }
+        .highlights {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 18px;
+          padding: 28px 14px;
+        }
+        .product-card {
+          max-width: 100%;
+          padding: 16px;
+        }
+        .product-card h3 {
+          font-size: 1rem;
+        }
+        .product-card p {
+          font-size: 0.88em;
+        }
+        .product-link {
+          font-size: 0.88em;
+          padding: 8px 14px;
+        }
+        .warnings h2 {
+          font-size: 32px;
+        }
+        .warnings h1 {
+          font-size: 26px;
+        }
+        .warnings p,
+        .warnings ul,
+        .warnings .warning-copy {
+          font-size: 17px;
         }
       }
 
       @media (max-width: 600px) {
         header {
           font-size: 18px;
+          padding: 10px 14px;
+        }
+        header img {
+          height: 52px;
+        }
+        nav {
+          margin-top: 8px;
         }
         nav a {
           margin-left: 10px;
+          font-size: 0.88em;
+        }
+        .hero {
+          padding: 52px 14px 36px;
+        }
+        .hero h1 {
+          font-size: 32px;
+        }
+        .hero p {
+          font-size: 0.88em;
+        }
+        .opening-info {
+          font-size: 0.84em;
+          padding: 10px 12px;
+          margin: 18px 10px;
+        }
+        .social-link {
+          gap: 4px;
+          margin: 4px 2px;
+        }
+        .social-icon {
+          width: 16px;
+          height: 16px;
+        }
+        .intro h2 {
+          font-size: 24px;
+        }
+        .intro p {
+          font-size: 15px;
+        }
+        .highlights {
+          grid-template-columns: 1fr;
+          padding: 18px 10px;
+          gap: 12px;
+        }
+        .highlights h2 {
+          font-size: 28px;
+          margin-bottom: 20px;
+        }
+        .product-card {
+          padding: 14px;
+        }
+        .product-card p {
+          font-size: 0.84em;
+        }
+        .warnings h2,
+        .warnings h1 {
+          font-size: 22px;
+        }
+        .warnings p,
+        .warnings ul li {
+          font-size: 14px;
+        }
+        .warnings .warning-copy {
+          font-size: 14px;
+        }
+        footer p {
+          font-size: 12px;
         }
       }
     </style>
   </head>
+
   <body>
     <header>
-      <img src="BasteltrineCOLOR.png" alt="Logo" />
-      <nav>
-        <a href="index.html">Home</a>
+      <div class="logo-group">
+        <img src="BasteltrineCOLOR.png" alt="Logo" />
+        <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <nav id="mainNav" aria-label="Hauptnavigation">
+        <a href="index.html" class="active">Homepage</a>
         <a href="produkte.html">Produkte</a>
-        <a href="reviews.html" class="active">Rezensionen</a>
+        <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
         ></a>
       </nav>
+      <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 
-    <section class="page-head">
-      <h1>Rezensionen & Feedback</h1>
+    <section class="hero">
+      <h1>Die Basteltrine</h1>
+      <p>Alles für deine kreativen Ideen - handgemacht und einzigartig!</p>
+    </section>
+
+    <!-- Öffnungszeiten Info -->
+    <section class="opening-info">
       <p>
-        Lob, Kritik oder Fehlerhinweise kannst du gleich direkt über die
-        vorbereitete E-Mail loswerden.
+        Unsere Öffnungszeiten variieren. Aktuelle Infos findest du auf
+        <a
+          class="social-link"
+          href="https://www.facebook.com/die.basteltrine"
+          onclick="
+            openFacebook(
+              event,
+              'https://www.facebook.com/die.basteltrine',
+              'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine',
+            )
+          "
+        >
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.022 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.017 1.792-4.685 4.533-4.685 1.313 0 2.686.236 2.686.236v2.963H15.83c-1.49 0-1.955.928-1.955 1.88v2.258h3.328l-.532 3.49h-2.796V24C19.612 23.095 24 18.1 24 12.073z"
+            />
+          </svg>
+          Facebook
+        </a>
+        oder in unserer
+        <a
+          class="social-link"
+          href="https://whatsapp.com/channel/0029VbC8lGIDOQIOhJWQ2w2l"
+          onclick="
+            openWhatsApp(
+              event,
+              'https://whatsapp.com/channel/0029VbC8lGIDOQIOhJWQ2w2l',
+              'whatsapp://channel/0029VbC8lGIDOQIOhJWQ2w2l',
+            )
+          "
+        >
+          <svg class="social-icon" viewBox="0 0 32 32" aria-hidden="true">
+            <path
+              d="M19.11 17.205c-.372-.186-1.1-.543-1.27-.605-.17-.062-.294-.093-.418.093-.124.186-.48.605-.59.729-.108.124-.217.14-.403.047-.186-.093-.785-.289-1.495-.923-.552-.492-.925-1.1-1.033-1.286-.108-.186-.01-.287.083-.38.084-.083.186-.217.279-.326.093-.108.124-.186.186-.31.062-.124.03-.233-.016-.326-.046-.093-.418-1.008-.573-1.384-.15-.36-.303-.31-.418-.316l-.356-.006c-.124 0-.326.047-.496.233-.17.186-.65.636-.65 1.55s.666 1.798.76 1.922c.093.124 1.31 2.002 3.176 2.808.444.192.79.306 1.06.392.445.142.85.122 1.17.074.357-.053 1.1-.45 1.255-.884.155-.434.155-.806.108-.884-.046-.077-.17-.124-.356-.217m-3.084 4.109h-.002a5.605 5.605 0 0 1-2.854-.782l-.205-.122-2.12.556.566-2.067-.134-.212a5.607 5.607 0 0 1-.857-2.99c.001-3.1 2.523-5.621 5.625-5.621 1.5.001 2.91.585 3.972 1.648a5.58 5.58 0 0 1 1.647 3.97c-.001 3.1-2.523 5.62-5.623 5.62m4.782-10.399A6.72 6.72 0 0 0 16.048 9a6.74 6.74 0 0 0-6.745 6.738 6.7 6.7 0 0 0 .91 3.367L9 23l4.01-1.052a6.75 6.75 0 0 0 3.038.727h.003a6.74 6.74 0 0 0 6.745-6.737 6.7 6.7 0 0 0-1.988-4.783M16.048 0C7.2 0 0 7.2 0 16.048c0 3.18.93 6.144 2.528 8.636L0 32l7.557-2.48a15.96 15.96 0 0 0 8.49 2.43h.006C24.9 31.95 32 24.75 32 15.902 32 7.054 24.9 0 16.048 0"
+            />
+          </svg>
+          WhatsApp-Community </a
+        >.
       </p>
     </section>
 
-    <div class="container">
-      <section class="form-card">
-        <h2>Neue Rezension / Fehlermeldung</h2>
-        <div class="form-grid">
-          <label class="required">
-            Name <span class="required-indicator">*</span>
-            <input id="reviewName" type="text" placeholder="Dein Name" />
-          </label>
-          <label class="required">
-            E-Mail <span class="required-indicator">*</span>
-            <input id="reviewEmail" type="email" placeholder="mail@example.de" />
-          </label>
-          <label class="required">
-            Typ <span class="required-indicator">*</span>
-            <select id="reviewType">
-              <option value="review">Rezension</option>
-              <option value="bug">Fehler melden</option>
-            </select>
-          </label>
-          <label>
-            Sternbewertung
-            <select id="reviewRating">
-              <option value="5">5 Sterne - Perfekt!</option>
-              <option value="4">4 Sterne - fast perfekt</option>
-              <option value="3">3 Sterne - solider Eindruck</option>
-              <option value="2">2 Sterne - noch Luft nach oben</option>
-              <option value="1">1 Stern - bitte dringend verbessern!</option>
-            </select>
-          </label>
-        </div>
-        <label>
-          Deine Nachricht
-          <textarea
-            id="reviewText"
-            placeholder="Was hat dir gefallen oder nervt dich?"
-          ></textarea>
-        </label>
-        <label class="publish-toggle">
-          <input id="publishReview" type="checkbox" checked />
-          Rezension veröffentlichen
-        </label>
-        <p id="reviewFeedback" class="order-error"></p>
-        <button id="postReview" type="button">Absenden</button>
-        <p class="mail-hint">Die Nachricht wird über unseren sicheren Service automatisch an dich weitergeleitet.</p>
-      </section>
+    <section class="intro">
+      <h2>Mit Liebe handgemacht</h2>
+      <p>
+        Bei uns findest du kreative Geschenkideen, Dekorationen und
+        personalisierte Kleinigkeiten für besondere Momente. Jedes Produkt wird
+        mit viel Sorgfalt gefertigt und kann auf Wunsch individuell angepasst
+        werden.
+      </p>
+    </section>
 
-      <section class="reviews-grid">
-        <h3>Aktuelle Rezensionen</h3>
-        <div id="reviewsList" class="review-list"></div>
-      </section>
-    </div>
+    <section class="highlights">
+      <h2>Beliebte Produkte</h2>
 
-    <footer>
-      <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
-      <div>
-        <a href="impressum.html">Impressum</a> •
-        <a href="datenschutz.html">Datenschutz</a>
+      <div class="product-card">
+        <img src="produkt1.png" alt="Produkt 1" />
+        <h3>Aufsteller Kita Abschied</h3>
+        <p>
+          Wunderschöne handgemachte Dekoration für einen besonderen
+          Kita-Abschied.
+        </p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
       </div>
-    </footer>
 
-    <div id="reportOverlay" class="overlay" aria-hidden="true">
-      <div class="overlay-content">
-        <p id="reportPreview" style="line-height:1.4;">Möchtest du diese Rezension melden?</p>
-        <div class="overlay-actions">
-          <button id="reportConfirm" type="button">Report senden</button>
-          <button id="reportCancel" type="button">Abbrechen</button>
-        </div>
+      <div class="product-card">
+        <img src="produkt2.jpg" alt="Produkt 2" />
+        <h3>Handgemachtes Geschenk</h3>
+        <p>Liebevoll gefertigt mit hochwertigen Materialien.</p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
       </div>
-    </div>
+
+      <div class="product-card">
+        <img src="produkt3.png" alt="Produkt 3" />
+        <h3>Personalisierte Deko</h3>
+        <p>
+          Individuell gestaltet für Geburtstage, Einschulung oder als kleines
+          Geschenk.
+        </p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+      </div>
+
+      <div class="product-card">
+        <img src="produkt4.png" alt="Produkt 4" />
+        <h3>Saisonale Bastelidee</h3>
+        <p>
+          Passend für Feste und Jahreszeiten, handgemacht und mit viel Liebe
+          dekoriert.
+        </p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+      </div>
+
+      <div class="product-card">
+        <img src="produkt5.png" alt="Produkt 5" />
+        <h3>Kleines Mitbringsel</h3>
+        <p>Eine schöne Aufmerksamkeit für Familie, Freunde oder Kolleginnen.</p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+      </div>
+
+      <div class="product-card">
+        <img src="produkt6.png" alt="Produkt 6" />
+        <h3>Individuelle Anfertigung</h3>
+        <p>
+          Du hast eine Idee? Viele Produkte können auf Wunsch angepasst werden.
+        </p>
+        <a class="product-link" href="produkte.html">Mehr ansehen</a>
+      </div>
+    </section>
+
+    <section class="warnings">
+      <h2>Wichtige Hinweise</h2>
+      <p>
+        Da viele Artikel handgemacht und personalisierbar sind, können
+        Bearbeitungszeit und Verfügbarkeit je nach Produkt variieren.
+      </p>
+      <div class="warning-copy">
+        <p>
+          Alle Produkte sind in liebevoller Handarbeit hergestellt. Es kann
+          durchaus zu kleinen Luftbläschen in den Produkten kommen. Diese sind
+          leider nicht immer zu verhindern und sind kein Reklamationsgrund.
+        </p>
+        <p>
+          Hersteller:<br />Marko Letz<br />Str. der Opfer des Faschismus 6<br />38820
+          Halberstadt<br />basteltrine@magenta.de
+        </p>
+        <p>
+          Produktsicherheit und Warnhinweise:<br />Gegossen mit Gießpulver von
+          Plastalin Super, Venus Arm und Beton. Nicht für Kinder geeignet, da
+          Kleinteile verschluckt werden können. Bitte nur mit einem leicht
+          feuchten Tuch säubern. Bei Bruch oder Fall besteht Verletzungsgefahr.
+        </p>
+        <p>
+          Kerzenhalter sind nur kurzzeitig hitzebeständig. Kerzen nie ganz
+          abbrennen lassen und möglichst batteriebetriebene Kerzen verwenden.
+          PLA-Filament-3D-Drucke sind nicht für Kinder unter 12 Jahren geeignet.
+          Die Produkte sind temperatur- und witterungsbeständig und teilweise
+          auch für den Außenbereich geeignet.
+        </p>
+        <p>
+          Holz ist ein Naturprodukt und kann Farbunterschiede aufweisen. Achtung
+          Splittergefahr. Nicht in der Nähe einer Kerze verwenden oder
+          aufstellen. Kerzen nie unbeaufsichtigt lassen. Dekoration an der Kerze
+          bitte vor dem Anzünden entfernen. Bei unsachgemäßem Gebrauch erfolgt
+          keine Haftung.
+        </p>
+      </div>
+
+      <h1>Du suchst etwas ganz Bestimmtes?</h1>
+      <p>
+        Dann melde dich gern über die Kontaktseite. Gemeinsam finden wir eine
+        passende kreative Lösung.
+      </p>
+      <div class="cta">
+        <a href="kontakt.html">Jetzt Kontakt aufnehmen</a>
+      </div>
+    </section>
 
     <script>
-      const reviewName = document.getElementById("reviewName");
-      const reviewEmail = document.getElementById("reviewEmail");
-      const reviewText = document.getElementById("reviewText");
-      const reviewRating = document.getElementById("reviewRating");
-      const reviewType = document.getElementById("reviewType");
-      const reviewFeedback = document.getElementById("reviewFeedback");
-      const postReview = document.getElementById("postReview");
-      const publishReview = document.getElementById("publishReview");
-      const reviewsList = document.getElementById("reviewsList");
-      const reportOverlay = document.getElementById("reportOverlay");
-      const reportPreview = document.getElementById("reportPreview");
-      const reportConfirm = document.getElementById("reportConfirm");
-      const reportCancel = document.getElementById("reportCancel");
-      const cartNavBadge = document.getElementById("cartNavBadge");
-      const REVIEWS_KEY = "basteltrine-published-reviews";
-      const API_ENDPOINT = "/api/reviews";
-      let pendingReport = null;
+      function openFacebook(event, webUrl, appUrl) {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      const obsceneWords = [
-        "arsch",
-        "fuck",
-        "shit",
-        "scheisse",
-        "scheiße",
-        "hurensohn",
-        "hurensöhne",
-        "penner",
-        "kacke",
-        "miststück",
-        "drecks",
-        "fick",
-        "pisse",
-        "wixer",
-        "blöde",
-        "idiot",
-        "dummkopf",
-        "nazi",
-        "verpiss",
-        "schlampe",
-        "fotze",
-        "fotzensohn",
-        "fotzensöhne",
-        "nutte",
-        "hure",
-        "nuttensohn",
-        "nuttensöhne",
-        "wixxer",
-        "ficker",
-        "verfickt",
-        "saftladen",
-        "stirb",
-        "sterbt",
-        "sterben",
-        "neger",
-        "nigga",
-        "nigger",
-        "penis",
-        "schwanz",
-        "leck meine eier",
-        "missgeburt",
-      ];
-
-      function isEmailValid(value) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
-      }
-
-      function containsObsceneWords(value) {
-        const normalized = value.toLowerCase();
-        return obsceneWords.some(function (word) {
-          return normalized.includes(word);
-        });
-      }
-
-      function validateReview() {
-        const name = reviewName.value.trim();
-        const email = reviewEmail.value.trim();
-        const text = reviewText.value.trim();
-        if (!name) {
-          reviewFeedback.textContent = "Bitte deinen Namen eintragen.";
-          return false;
+        if (!isMobile) {
+          return;
         }
-        if (!isEmailValid(email)) {
-          reviewFeedback.textContent = "Bitte eine gültige E-Mail angeben.";
-          return false;
-        }
-        if (!text) {
-          reviewFeedback.textContent = "Erzähl uns kurz, was dich bewegt.";
-          return false;
-        }
-        if (containsObsceneWords(text)) {
-          reviewFeedback.textContent =
-            "Wir können diese Nachricht nicht veröffentlichen, weil sie nicht passende Wörter enthält.";
-          return false;
-        }
-        reviewFeedback.textContent = "";
-        return true;
-      }
 
-      function loadReviews() {
-        const stored = localStorage.getItem(REVIEWS_KEY);
-        if (stored) {
-          try {
-            return JSON.parse(stored);
-          } catch (error) {
-            console.error("Fehler beim Laden der Rezensionen", error);
+        event.preventDefault();
+
+        const start = Date.now();
+        window.location.href = appUrl;
+
+        setTimeout(function () {
+          if (Date.now() - start < 1500) {
+            window.location.href = webUrl;
           }
-        }
-        return [];
+        }, 700);
       }
 
-      function saveReviews(reviews) {
-        localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
-      }
+      function openWhatsApp(event, webUrl, appUrl) {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      let publishedReviews = loadReviews();
-
-      function buildReviewCard(review, index) {
-        const date = new Date(review.createdAt).toLocaleDateString("de-DE", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-        return `
-          <article class="review-card">
-            <strong>${review.name}</strong>
-            <span>${review.rating} Sterne · ${date}</span>
-            <p>${review.text}</p>
-            <button class="report-btn" data-review-index="${index}">Report</button>
-          </article>
-        `;
-      }
-
-      function renderReviews() {
-        if (!publishedReviews.length) {
-          reviewsList.innerHTML =
-            '<div class="empty-state">Noch keine veröffentlichten Rezensionen. Aber du kannst die erste sein!</div>';
+        if (!isMobile) {
           return;
         }
-        reviewsList.innerHTML = publishedReviews
-          .map(function (review, index) {
-            return buildReviewCard(review, index);
-          })
-          .join("");
-      }
 
-      async function sendToApi(payload) {
-        const response = await fetch(API_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) {
-          const message = await response.text();
-          throw new Error(message || "Fehler beim Senden");
-        }
-      }
+        event.preventDefault();
 
-      function buildReportBody(review) {
-        const date = new Date(review.createdAt).toLocaleDateString("de-DE", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-        reportPreview.textContent = `${review.name} · ${review.rating} Sterne
-${review.text}`;
-      }
+        const start = Date.now();
+        window.location.href = appUrl;
 
-      function showReportOverlay(review) {
-        pendingReport = review;
-        reportOverlay.classList.add("active");
-        reportOverlay.setAttribute("aria-hidden", "false");
-      }
+        setTimeout(function () {
+          if (Date.now() - start < 1500) {
+            window.location.href = webUrl;
+          }
+        }, 700);
+    }
+  </script>
 
-      function hideReportOverlay() {
-        pendingReport = null;
-        reportOverlay.classList.remove("active");
-        reportOverlay.setAttribute("aria-hidden", "true");
-      }
+    <script>
+      (function () {
+        const storageKey = "basteltrine-cart";
+        const badge = document.getElementById("cartNavBadge");
 
-      reviewsList.addEventListener("click", function (event) {
-        const button = event.target.closest(".report-btn");
-        if (!button) {
+      function updateBadge() {
+        if (!badge) {
           return;
         }
-        const index = Number(button.dataset.reviewIndex);
-        const review = publishedReviews[index];
-        if (review) {
-          buildReportBody(review);
-          showReportOverlay(review);
-        }
-      });
-
-      reportConfirm.addEventListener("click", async function () {
-        if (!pendingReport) {
-          return;
-        }
-        const payload = {
-          type: "report",
-          name: pendingReport.name,
-          rating: pendingReport.rating,
-          text: pendingReport.text,
-          createdAt: pendingReport.createdAt,
-        };
+        let count = 0;
         try {
-          await sendToApi(payload);
-          hideReportOverlay();
+          const stored = JSON.parse(localStorage.getItem(storageKey) || "{}");
+          count = Object.values(stored).reduce(function (sum, entry) {
+            return sum + (entry.qty || 0);
+          }, 0);
         } catch (error) {
-          reviewFeedback.textContent = error.message;
+          console.error("Fehler beim Lesen des Warenkorbs:", error);
         }
-      });
-
-      reportCancel.addEventListener("click", hideReportOverlay);
-
-      postReview.addEventListener("click", async function () {
-        if (!validateReview()) {
-          return;
-        }
-
-        const payload = {
-          name: reviewName.value.trim(),
-          email: reviewEmail.value.trim(),
-          text: reviewText.value.trim(),
-          rating: reviewRating.value,
-          type: reviewType.value,
-          publish: publishReview.checked ? "published" : "pending",
-        };
-
-        try {
-          await sendToApi(payload);
-        } catch (error) {
-          reviewFeedback.textContent = error.message;
-          return;
-        }
-
-        if (payload.type === "review" && publishReview.checked) {
-          publishedReviews.unshift({
-            name: payload.name,
-            rating: payload.rating,
-            text: payload.text,
-            createdAt: new Date().toISOString(),
-          });
-          publishedReviews = publishedReviews.slice(0, 20);
-          saveReviews(publishedReviews);
-          renderReviews();
-        }
-
-        if (payload.type === "bug") {
-          reviewFeedback.textContent =
-            "Die Fehlermeldung wurde abgeschickt. Vielen Dank für deinen Hinweis.";
-        } else {
-          reviewFeedback.textContent =
-            "Danke! Deine Nachricht wird nun automatisch verarbeitet.";
-          reviewText.value = "";
-        }
-      });
-
-      function updateCartBadge() {
-        if (!cartNavBadge) {
-          return;
-        }
-        const storage = JSON.parse(localStorage.getItem("basteltrine-cart") || "{}");
-        const count = Object.values(storage).reduce(function (sum, entry) {
-          return sum + (entry.qty || 0);
-        }, 0);
-        cartNavBadge.textContent = count;
-        cartNavBadge.style.display = count ? "inline-block" : "none";
+        badge.textContent = count;
+        badge.style.display = count ? "inline-block" : "none";
       }
 
-      renderReviews();
-      updateCartBadge();
-      window.addEventListener("storage", function (event) {
-        if (event.key === "basteltrine-cart") {
-          updateCartBadge();
+      updateBadge();
+        window.addEventListener("storage", function (event) {
+          if (event.key === storageKey) {
+            updateBadge();
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+      const navBackdrop = document.getElementById("navBackdrop");
+
+      function closeMenu() {
+        document.body.classList.remove("menu-open");
+        if (menuToggle) {
+          menuToggle.setAttribute("aria-expanded", "false");
         }
+      }
+
+      menuToggle?.addEventListener("click", function () {
+        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!expanded));
+        document.body.classList.toggle("menu-open");
+      });
+
+      navBackdrop?.addEventListener("click", closeMenu);
+
+      mainNav?.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", closeMenu);
       });
     </script>
 
-
+    <footer>
+      <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
+      <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </footer>
   </body>
 </html>

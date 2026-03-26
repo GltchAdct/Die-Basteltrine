@@ -1437,6 +1437,30 @@
       renderProducts();
     </script>
 
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+      const navBackdrop = document.getElementById("navBackdrop");
+
+      function closeMenu() {
+        document.body.classList.remove("menu-open");
+        if (menuToggle) {
+          menuToggle.setAttribute("aria-expanded", "false");
+        }
+      }
+
+      menuToggle?.addEventListener("click", function () {
+        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!expanded));
+        document.body.classList.toggle("menu-open");
+      });
+
+      navBackdrop?.addEventListener("click", closeMenu);
+      mainNav?.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", closeMenu);
+      });
+    </script>
+
     <footer>
       <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>
       <div class="footer-links">

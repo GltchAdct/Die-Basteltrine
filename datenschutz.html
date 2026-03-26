@@ -18,15 +18,16 @@
         color: #ffeda8;
       }
 
+
       header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 15px 30px;
         background: #00231f;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 140;
         font-size: 30px;
       }
 
@@ -37,11 +38,11 @@
       }
 
       .menu-button {
-        width: 40px;
-        height: 40px;
-        border: 2px solid rgba(255, 255, 255, 0.65);
-        border-radius: 50%;
-        background: transparent;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.08);
         display: none;
         flex-direction: column;
         justify-content: center;
@@ -51,7 +52,7 @@
       }
 
       .menu-button span {
-        width: 20px;
+        width: 22px;
         height: 2px;
         background: #ffeda8;
         transition: transform 0.2s ease;
@@ -62,17 +63,22 @@
       }
 
       nav {
+        flex: 1 1 auto;
         display: flex;
-        gap: 28px;
         align-items: center;
+        justify-content: center;
+        gap: 28px;
+        position: relative;
+        z-index: 145;
+        max-width: min(100%, 360px);
       }
 
       nav a {
-        margin-left: 25px;
         font-weight: bold;
-        text-decoration: none;
         color: #ffeda8;
+        text-decoration: none;
         transition: color 0.3s;
+        padding-bottom: 2px;
       }
 
       .cart-badge {
@@ -96,17 +102,6 @@
         color: #ffd166;
       }
 
-      .cart-badge {
-        background: #ffd166;
-        color: #00231f;
-        border-radius: 999px;
-        padding: 2px 6px;
-        margin-left: 4px;
-        font-size: 0.8em;
-        font-weight: bold;
-        display: none;
-      }
-
       #navBackdrop {
         position: fixed;
         inset: 0;
@@ -114,8 +109,51 @@
         pointer-events: none;
         opacity: 0;
         transition: opacity 0.25s ease;
-        z-index: 80;
+        z-index: 120;
         display: none;
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          position: fixed;
+          right: 16px;
+          top: 70px;
+          background: rgba(0, 0, 0, 0.9);
+          padding: 18px 26px;
+          border-radius: 18px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.25s ease;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+          pointer-events: none;
+        }
+        nav a {
+          margin-left: 0;
+          font-size: 0.95em;
+        }
+        .menu-button {
+          display: flex;
+        }
+        body.menu-open nav {
+          transform: scaleY(1);
+          pointer-events: auto;
+        }
+        body.menu-open #navBackdrop {
+          display: block;
+          opacity: 1;
+        }
+        body.menu-open .menu-button span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        body.menu-open .menu-button span:nth-child(2) {
+          opacity: 0;
+        }
+        body.menu-open .menu-button span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
       }
 
       .page-title {
@@ -216,24 +254,26 @@
   <body>
     <header>
       <div class="logo-group">
-        <img src="BasteltrineCOLOR.png" alt="Logo" />
-        <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a class="logo-link" href="index.html">
+          <img src="BasteltrineCOLOR.png" alt="Logo" />
+        </a>
       </div>
       <nav id="mainNav" aria-label="Hauptnavigation">
         <a href="index.html">Home</a>
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
-        <a href="datenschutz.html" class="active">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
         ></a>
       </nav>
+      <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 

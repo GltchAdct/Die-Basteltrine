@@ -6,38 +6,22 @@
     <title>Die Basteltrine</title>
 
     <style>
-      :root {
-        --bg: #003631;
-        --surface: rgba(0, 84, 75, 0.9);
-        --surface-soft: rgba(0, 84, 75, 0.6);
-        --surface-strong: #004a51;
-        --accent: #ffd166;
-        --accent-warm: #ffb703;
-        --muted: #a5ffc8;
-      }
-
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
 
-      body {
-        font-family: Arial, sans-serif;
-        background: radial-gradient(circle at top, rgba(255, 209, 102, 0.12), transparent 45%), var(--bg);
-        color: #ffeda8;
-        scroll-behavior: smooth;
-        min-height: 100vh;
-        position: relative;
+      h3 {
+        text-align: center;
+        font-size: 26px;
       }
 
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: linear-gradient(130deg, rgba(255, 209, 102, 0.05), rgba(0, 36, 31, 0.95));
-        pointer-events: none;
-        z-index: 0;
+      body {
+        font-family: Arial, sans-serif;
+        background: #003631;
+        color: #ffeda8;
+        scroll-behavior: smooth;
       }
 
       a {
@@ -188,58 +172,30 @@
 
       /* HERO */
       .hero {
-        position: relative;
-        z-index: 2;
-        margin: 70px auto 30px;
-        padding: 60px 24px;
-        max-width: 900px;
-        background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(0, 84, 75, 0.75));
-        border-radius: 24px;
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
         text-align: center;
+        padding: 80px 20px;
       }
 
       .hero h1 {
-        font-size: 64px;
-        margin-bottom: 18px;
+        font-size: 72px;
+        margin-bottom: 20px;
         color: #ffd166;
-        letter-spacing: 1px;
       }
 
       .hero p {
-        font-size: 1.1em;
-        color: #a5ffc8;
-        margin-bottom: 28px;
-      }
-
-      .hero .cta {
-        margin-top: 0;
-      }
-
-      .hero .cta a {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 16px 30px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #ffd166, #ffb703);
-        color: #003631;
-        font-weight: bold;
-        font-size: 1em;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+        font-size: 1.2em;
+        color: #ffd166;
       }
 
       /* OPENING INFO */
       .opening-info {
-        max-width: 900px;
-        margin: 0 auto 30px;
-        padding: 18px 24px;
-        background: rgba(0, 84, 75, 0.9);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        font-size: 1.05em;
-        color: #ffeda8;
         text-align: center;
+        margin: 30px 20px;
+        padding: 15px 20px;
+        background: #00544b;
+        border-radius: 12px;
+        font-size: 1em;
+        color: #ffd166;
       }
 
       .opening-info a {
@@ -263,12 +219,9 @@
       }
 
       .intro {
-        max-width: 960px;
-        margin: 0 auto 40px;
-        padding: 20px 24px;
-        background: rgba(0, 84, 75, 0.85);
-        border-radius: 18px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 10px 20px 20px;
         text-align: center;
       }
 
@@ -286,14 +239,12 @@
       /* PRODUKTE */
       .highlights {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
         gap: 30px;
         padding: 40px 20px;
         max-width: 1200px;
         margin: auto;
         justify-content: center;
-        position: relative;
-        z-index: 2;
       }
 
       .highlights h2 {
@@ -304,33 +255,29 @@
       }
 
       .product-card {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(0, 67, 60, 0.85));
-        border-radius: 18px;
-        padding: 24px 20px;
+        background: #00544b;
+        border-radius: 15px;
+        padding: 20px;
         text-align: center;
         width: 100%;
-        max-width: 320px;
+        max-width: 300px;
         transition:
           transform 0.3s ease,
-          box-shadow 0.35s ease;
+          box-shadow 0.3s ease;
         cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
       }
 
       .product-card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45);
+        transform: translateY(-10px) scale(1.03);
+        box-shadow:
+          0 15px 30px rgba(255, 209, 102, 0.5),
+          0 10px 20px rgba(0, 0, 0, 0.3);
       }
 
       .product-card img {
         max-width: 100%;
-        border-radius: 12px;
+        border-radius: 8px;
         margin-bottom: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .product-card h3 {
@@ -358,65 +305,51 @@
 
       .cta {
         text-align: center;
-        margin-top: 40px;
-        z-index: 2;
-        position: relative;
+        margin-top: 15px;
       }
 
       .cta a {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 14px 34px;
-        background: linear-gradient(135deg, #ffd166, #ffb703);
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(45deg, #ffd166, #ffb703);
         color: #003631;
-        border-radius: 999px;
+        border-radius: 8px;
         font-weight: bold;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-        transition: transform 0.3s ease;
-      }
-
-      .cta a:hover {
-        transform: translateY(-4px) scale(1.02);
       }
 
       /* HINWEISE */
       .warnings {
-        padding: 40px 24px;
-        max-width: 1100px;
-        margin: 40px auto;
-        background: rgba(0, 26, 24, 0.9);
-        border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: auto;
       }
 
       .warnings h2 {
         text-align: center;
-        border-top: 2px solid var(--accent);
-        padding-top: 10px;
+        border-top: 2px solid #ffeda8;
         margin-bottom: 30px;
+        padding-top: 10px;
         font-size: 40px;
-        color: var(--accent);
       }
 
       .warnings h1 {
         text-align: center;
-        margin-top: 30px;
-        font-size: 32px;
+        margin-top: 40px;
+        font-size: 30px;
       }
 
       .warnings p,
       .warnings ul {
         max-width: 1000px;
-        margin: 0 auto;
+        margin: auto;
         font-size: 20px;
         line-height: 1.6;
         text-align: center;
       }
 
       .warnings .warning-copy {
-        margin-top: 24px;
+        max-width: 1000px;
+        margin: 24px auto 0;
         font-size: 20px;
         line-height: 1.7;
         text-align: center;
@@ -425,18 +358,10 @@
       .warnings ul {
         list-style: none;
         margin-top: 20px;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 18px;
-        justify-content: center;
       }
 
       .warnings li {
-        flex: 1 1 220px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 12px;
-        padding: 12px 14px;
+        margin-bottom: 12px;
       }
 
       footer {
@@ -466,28 +391,7 @@
       }
 
       /* ----- RESPONSIVENESS ----- */
-      @media (max-width: 900px) {
-        .hero {
-          padding: 48px 18px;
-          margin: 40px 12px 24px;
-          border-radius: 16px;
-        }
-
-        .highlights {
-          padding: 30px 16px;
-        }
-
-        .product-card {
-          min-height: 360px;
-        }
-
-        .opening-info,
-        .intro,
-        .warnings {
-          margin: 0 12px 24px;
-          padding: 18px;
-        }
-      }
+      
     </style>
   </head>
   <body>
@@ -568,29 +472,33 @@
 
     <section class="warnings">
       <h2>Allgemeine Hinweise</h2>
-      <p>Alle Produkte sind in liebevoller Handarbeit hergestellt.
-        Es kann durchaus zu kleinen Luftbläschen in den Produkten kommen,
-        diese sind leider nicht immer zu verhindern und sind kein Reklamationsgrund.
-        Hersteller:
-        Marko Letz
-        Str. der Opfer des Faschismus 6
+      <p>Alle Produkte sind in liebevoller Handarbeit hergestellt.<br>
+        Es kann durchaus zu kleinen Luftbläschen in den Produkten kommen,<br>
+        diese sind leider nicht immer zu verhindern und sind kein Reklamationsgrund.<br></p><br>
+        <h3>Hersteller:</h3><br>
+        <p>Marko Letz<br>
+        Str. der Opfer des Faschismus 6<br>
         Halberstadt
-        38820
+        38820<br>
         basteltrine@magenta.de</p>
 
 <h2>Produktsicherheit:</h2>
-<h4>Warn-und Sicherheitshinweise</h4>
-<p>gegossen mit Gießpulver von Plastalin super, Venus Arm und Beton
-nicht für Kinder geeignet (kein Spielzeug, da Kleinteile verschluckt werden können )
-säubern bitte nur mit einem leicht feuchten Tuch
-bei Bruch oder Fall besteht Verletzungsgefahr
-Kerzenhalter sind nur kurzzeitig Hitzebeständig, daher Kerzen nie ganz abbrennen lassen am besten Kerzen mit Batterie verwenden
-PLA Filament 3 d Druck (auf Bestellung) nicht für Kinder unter 12 Jahren geeignet, da Kleinteile verschluckt werden können.
-bei Bruch oder Fall besteht Verletzungsgefahr Temperatur und Witterungsbeständig, also auch für den Aussenbereich
-Kerzenhalter ausschließlich mit Batteriebetriebenen Kerzen verwenden
-Holz ist ein Naturprodukt und kann somit Farbunterschiede aufweisen
-Achtung Splittergefahr nicht in der nähe einer Kerze verwenden bzw. aufstellen Kerzen nie unbeaufsichtigt lassen
-Dekoration an der Kerze, vor dem anzünden entfernen.
+<h3>Warn-und Sicherheitshinweise</h3>
+<p>gegossen mit Gießpulver von Plastalin super, Venus Arm und Beton<br>
+nicht für Kinder geeignet (kein Spielzeug, da Kleinteile verschluckt werden können)<br>
+säubern bitte nur mit einem leicht feuchten Tuch<br>
+bei Bruch oder Fall besteht Verletzungsgefahr<br>
+Kerzenhalter sind nur kurzzeitig Hitzebeständig,<br>
+daher Kerzen nie ganz abbrennen lassen am besten Kerzen mit Batterie verwenden<br>
+PLA Filament 3-D Druck (auf Bestellung) nicht für Kinder unter 12 Jahren geeignet,<br>
+da Kleinteile verschluckt werden können.<br>
+bei Bruch oder Fall besteht Verletzungsgefahr<br>
+Temperatur und Witterungsbeständig, also auch für den Aussenbereich<br>
+Kerzenhalter ausschließlich mit Batteriebetriebenen Kerzen verwenden<br>
+Holz ist ein Naturprodukt und kann somit Farbunterschiede aufweisen<br>
+Achtung Splittergefahr nicht in der nähe einer Kerze verwenden<br>
+bzw. aufstellen Kerzen nie unbeaufsichtigt lassen<br>
+Dekoration an der Kerze, vor dem anzünden entfernen.<br>
 Bei unsachgemäßem Gebrauch erfolgt keine Haftung.</p>
     </section>
 

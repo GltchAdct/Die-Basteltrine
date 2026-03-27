@@ -86,16 +86,6 @@
         transition: transform 0.2s ease;
       }
 
-      #navBackdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.25s ease;
-        z-index: 80;
-        display: none;
-      }
 
       .nav-icon {
         margin-left: 6px;
@@ -218,10 +208,6 @@
           pointer-events: auto;
         }
 
-        body.menu-open #navBackdrop {
-          display: block;
-          opacity: 1;
-        }
 
         body.menu-open .menu-button span:nth-child(1) {
           transform: translateY(6px) rotate(45deg);
@@ -298,8 +284,6 @@
         <a href="produkte.html">Produkte</a>
         <a href="reviews.html">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
-        <a href="datenschutz.html">Datenschutz</a>
-        <a href="impressum.html" class="active">Impressum</a>
         <a href="cart.html"
           >Warenkorb <span class="nav-icon">🛒</span
           ><span id="cartNavBadge" class="cart-badge"></span
@@ -310,7 +294,6 @@
         <span></span>
         <span></span>
       </button>
-      <div id="navBackdrop" aria-hidden="true"></div>
     </header>
 
     <section class="page-title">
@@ -370,7 +353,6 @@
     <script>
       (function () {
         const menuToggle = document.getElementById("menuToggle");
-        const navBackdrop = document.getElementById("navBackdrop");
         const mainNav = document.getElementById("mainNav");
 
         function closeMenu() {
@@ -386,7 +368,6 @@
           document.body.classList.toggle("menu-open");
         });
 
-        navBackdrop?.addEventListener("click", closeMenu);
         mainNav?.querySelectorAll("a").forEach(function (link) {
           link.addEventListener("click", closeMenu);
         });

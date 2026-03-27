@@ -67,10 +67,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 28px;
+        gap: clamp(16px, 2vw, 32px);
+        flex-wrap: wrap;
         position: relative;
         z-index: 145;
-        max-width: min(100%, 360px);
+        width: 100%;
       }
 
       nav a {

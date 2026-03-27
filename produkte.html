@@ -87,6 +87,40 @@
         transition: transform 0.2s ease;
       }
 
+      button,
+      .panel-link,
+      .product-link,
+      .cart-remove-btn,
+      .controls-toggle,
+      .toast-link {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      button:hover,
+      .panel-link:hover,
+      .product-link:hover,
+      .cart-remove-btn:hover,
+      .controls-toggle:hover,
+      .toast-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+      }
+
+      button:active,
+      .panel-link:active,
+      .product-link:active,
+      .controls-toggle:active,
+      .cart-remove-btn:active {
+        transform: translateY(0);
+      }
+
+      .add-cart-btn.adding {
+        background: linear-gradient(135deg, #ffd166, #ffb703);
+        color: #00231f;
+        box-shadow: 0 12px 24px rgba(255, 209, 102, 0.6);
+        transform: scale(1.02);
+      }
+
 
       .nav-icon {
         margin-left: 6px;
@@ -1295,7 +1329,16 @@
         });
 
         document.querySelectorAll(".add-cart-btn").forEach(function (button) {
+          const originalLabel = button.textContent;
           button.addEventListener("click", function () {
+            button.classList.add("adding");
+            button.disabled = true;
+            button.textContent = "Hinzugefügt";
+            setTimeout(function () {
+              button.classList.remove("adding");
+              button.disabled = false;
+              button.textContent = originalLabel;
+            }, 900);
             addToCart(Number(button.dataset.add));
           });
         });

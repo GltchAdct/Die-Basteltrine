@@ -18,6 +18,38 @@
         color: #ffeda8;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
       header {
         display: flex;
         align-items: center;
@@ -67,6 +99,23 @@
 
       nav a:hover {
         color: #ffd166;
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        z-index: 320;
+      }
+
+      .scroll-progress-bar {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(135deg, #ffd166, #ffb703);
+        transition: width 0.15s ease;
       }
 
       .menu-button {
@@ -329,7 +378,10 @@
         transition:
           transform 0.2s ease,
           box-shadow 0.2s ease;
+        cursor: pointer;
       }
+
+
 
       .panel-link-email {
         background: linear-gradient(135deg, #e5b73a, #c48e1c);
@@ -456,6 +508,10 @@
   </head>
 
   <body>
+    <div class="scroll-progress" aria-hidden="true">
+      <div class="scroll-progress-bar"></div>
+    </div>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -482,8 +538,7 @@
       <h1>Warenkorb</h1>
       <p>
         Du siehst hier nur die Übersicht. Produkte fügst du auf der Produktseite
-        hinzu. Sobald du fertig bist, schick die Bestellung per E-Mail oder über
-        WhatsApp ab.
+        hinzu. Sobald du fertig bist, kannst du deine Bestellung direkt abschicken.
       </p>
     </section>
 
@@ -519,10 +574,10 @@
       <div>
         <h2>Gesamtsumme</h2>
         <p id="cartSummary">0,00 €</p>
-        <p>
-          Wenn du fertig bist, gib noch Name, E-Mail und einen Wunschhinweis an.
-          Danach kannst du die Bestellung per E-Mail oder WhatsApp absenden.
-        </p>
+          <p>
+            Wenn du fertig bist, gib noch Name, E-Mail und einen Wunschhinweis an
+            und nutze den Button, um die Bestellung abzuschicken.
+          </p>
         <div class="order-info">
           <label class="required">
             Name
@@ -553,20 +608,6 @@
         </div>
         <p id="orderError" class="order-error"></p>
         <div class="cart-actions">
-          <a
-            id="cartMail"
-            class="panel-link panel-link-email"
-            href="mailto:basteltrine@magenta.de?subject=Bestellung%20Die%20Basteltrine"
-            >Bestellung per E-Mail schicken</a
-          >
-          <a
-            id="cartWhatsApp"
-            class="panel-link panel-link-whatsapp"
-            href="https://wa.me/?text=Ich%20möchte%20eine%20Bestellung%20aufgeben"
-            target="_blank"
-            rel="noopener"
-            >Per WhatsApp teilen</a
-          >
           <button id="cartSubmit" class="panel-link panel-link-submit" type="button">
             Bestellung absenden
           </button>
@@ -591,8 +632,6 @@
       const cartNavBadge = document.getElementById("cartNavBadge");
       const cartOverview = document.getElementById("cartOverview");
       const cartSummary = document.getElementById("cartSummary");
-      const cartMail = document.getElementById("cartMail");
-      const cartWhatsApp = document.getElementById("cartWhatsApp");
       const orderName = document.getElementById("orderName");
       const orderEmail = document.getElementById("orderEmail");
       const orderNote = document.getElementById("orderNote");
@@ -751,12 +790,6 @@
       function updateButtonsState() {
         const valid = hasRequiredOrderInfo();
         const hasItems = currentLines.length > 0;
-        [cartMail, cartWhatsApp].forEach(function (button) {
-          if (!button) {
-            return;
-          }
-          button.classList.toggle("disabled", !valid);
-        });
         if (orderSubmit) {
           const disabled = !valid || !hasItems;
           orderSubmit.disabled = disabled;
@@ -770,36 +803,8 @@
 
       function updateOrderLinks(lines) {
         currentLines = lines;
-        const productLines = lines.map(function (line) {
-          return `${line.name} × ${line.qty}`;
-        });
-        const infoLines = getOrderInfo();
-        const bodyLines = [
-          "Bestellung von mir",
-          "",
-          ...infoLines,
-          "",
-          "Produkte:",
-          ...productLines,
-        ];
-        const waLines = [
-          "Hallo, ich sende folgende Bestellung:",
-          "",
-          ...infoLines,
-          "",
-          ...productLines,
-        ];
-
-        const mailBody = encodeURIComponent(bodyLines.join("\n"));
-        const waBody = encodeURIComponent(waLines.join("\n"));
-
-        cartMail.href = `mailto:basteltrine@magenta.de?subject=${encodeURIComponent(
-          "Bestellung Die Basteltrine",
-        )}&body=${mailBody}`;
-        cartWhatsApp.href = `https://wa.me/?text=${waBody}`;
         updateButtonsState();
       }
-
       async function submitOrder() {
         if (!currentLines.length) {
           setOrderError("Bitte füge zuerst Produkte zum Warenkorb hinzu.");
@@ -928,23 +933,6 @@
       if (orderSubmit) {
         orderSubmit.addEventListener("click", submitOrder);
       }
-      function handleSendClick(event) {
-        if (!currentLines.length) {
-          event.preventDefault();
-          setOrderError("Bitte lege erst Produkte in den Warenkorb.");
-          return;
-        }
-        if (!hasRequiredOrderInfo()) {
-          event.preventDefault();
-          setOrderError("Bitte Name und gültige E-Mail-Adresse eingeben.");
-        }
-      }
-      [cartMail, cartWhatsApp].forEach(function (button) {
-        if (!button) {
-          return;
-        }
-        button.addEventListener("click", handleSendClick);
-      });
       [orderName, orderEmail, orderNote, orderPhone].forEach(function (input) {
         if (!input) {
           return;
@@ -997,6 +985,20 @@
             }, 220);
           });
         });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const bar = document.querySelector(".scroll-progress-bar");
+        function update() {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const ratio = docHeight > 0 ? scrollTop / docHeight : 0;
+          bar.style.width = Math.min(100, Math.max(0, ratio * 100)) + "%";
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        update();
       })();
     </script>
   </body>

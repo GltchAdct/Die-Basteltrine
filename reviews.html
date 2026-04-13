@@ -18,6 +18,38 @@
         color: #ffeda8;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
       header {
         display: flex;
         align-items: center;
@@ -61,8 +93,26 @@
         padding-bottom: 5px;
       }
 
+
       nav a:hover {
         color: #ffd166;
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        z-index: 320;
+      }
+
+      .scroll-progress-bar {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(135deg, #ffd166, #ffb703);
+        transition: width 0.15s ease;
       }
 
       .menu-button {
@@ -437,6 +487,10 @@
     </style>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true">
+      <div class="scroll-progress-bar"></div>
+    </div>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -853,6 +907,20 @@ ${review.text}`;
             }, 220);
           });
         });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const bar = document.querySelector(".scroll-progress-bar");
+        function update() {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const ratio = docHeight > 0 ? scrollTop / docHeight : 0;
+          bar.style.width = Math.min(100, Math.max(0, ratio * 100)) + "%";
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        update();
       })();
     </script>
 

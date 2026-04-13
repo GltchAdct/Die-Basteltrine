@@ -88,6 +88,9 @@
         text-decoration: none;
         transition: color 0.3s;
         padding-bottom: 2px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
 
       nav a.active {
@@ -144,27 +147,6 @@
         transform: scale(1.1);
       }
 
-      .custom-scrollbar {
-        position: fixed;
-        top: 20px;
-        right: 16px;
-        width: 6px;
-        height: calc(100vh - 40px);
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 999px;
-        pointer-events: none;
-        z-index: 330;
-      }
-
-      .custom-scrollbar-thumb {
-        width: 100%;
-        height: 60px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #ffd166, #ffb703);
-        box-shadow: 0 0 12px rgba(255, 209, 102, 0.7);
-        transform: translateY(0);
-        transition: transform 0.2s ease;
-      }
 
       button,
       .panel-link,
@@ -204,8 +186,19 @@
       }
 
       .nav-icon {
-        margin-left: 6px;
-        font-size: 0.9em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        margin-left: 0;
+      }
+
+      .nav-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        fill: none;
       }
 
       @media (max-width: 900px) {
@@ -285,6 +278,43 @@
         margin-bottom: 16px;
       }
 
+      .form-hint {
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        line-height: 1.4;
+        font-size: 0.95em;
+      }
+
+      .form-hint strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.95em;
+        color: #ffd166;
+      }
+
+      .bug-fields {
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .review-field {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .form-field {
+        width: 100%;
+      }
+
+      .form-actions {
+        display: none;
+      }
+
       .form-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -308,6 +338,7 @@
         font: inherit;
         background: rgba(255, 255, 255, 0.95);
         color: #00231f;
+        width: 100%;
       }
 
       textarea {
@@ -495,9 +526,6 @@
     </style>
   </head>
   <body>
-    <div class="custom-scrollbar" aria-hidden="true">
-      <div class="custom-scrollbar-thumb"></div>
-    </div>
     <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
@@ -511,8 +539,8 @@
         <a href="reviews.html" class="active">Rezensionen</a>
         <a href="kontakt.html">Kontakt</a>
         <a href="cart.html"
-          >Warenkorb <span class="nav-icon">🛒</span
-          ><span id="cartNavBadge" class="cart-badge"></span
+        ><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="presentation"><path d="M6 7h12l1.5 12h-15z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Warenkorb
+          <span id="cartNavBadge" class="cart-badge"></span
         ></a>
       </nav>
       <button id="menuToggle" class="menu-button" aria-expanded="false" aria-label="Navigation öffnen">
@@ -533,46 +561,64 @@
     <div class="container">
       <section class="form-card">
         <h2>Neue Rezension / Fehlermeldung</h2>
+        <div class="form-hint">
+          <strong>Fehler melden</strong>
+          Beschreibe kurz, was passiert ist, inklusive Browser/ Gerät, was du erwartet hast und was konkret schiefgeht. Wenn möglich, füge Fehlermeldungen oder Zeitpunkte hinzu, damit wir die Ursache schneller finden. Du bekommst eine Antwort per E-Mail, sobald wir das Problem eingrenzen konnten.
+        </div>
         <div class="form-grid">
           <label class="required">
-            Name <span class="required-indicator">*</span>
-            <input id="reviewName" type="text" placeholder="Dein Name" />
-          </label>
-          <label class="required">
-            E-Mail <span class="required-indicator">*</span>
-            <input id="reviewEmail" type="email" placeholder="mail@example.de" />
-          </label>
-          <label class="required">
-            Typ <span class="required-indicator">*</span>
-            <select id="reviewType">
-              <option value="review">Rezension</option>
-              <option value="bug">Fehler melden</option>
-            </select>
-          </label>
+          Name <span class="required-indicator">*</span>
+          <input id="reviewName" type="text" placeholder="Dein Name" />
+        </label>
+        <label class="required">
+          E-Mail <span class="required-indicator">*</span>
+          <input id="reviewEmail" type="email" placeholder="mail@example.de" />
+        </label>
+        <label class="required">
+          Typ <span class="required-indicator">*</span>
+          <select id="reviewType">
+            <option value="review">Rezension</option>
+            <option value="bug">Fehler melden</option>
+          </select>
+        </label>
+        <label>
+          Sternbewertung
+          <select id="reviewRating">
+            <option value="5">5 Sterne - Perfekt!</option>
+            <option value="4">4 Sterne - fast perfekt</option>
+            <option value="3">3 Sterne - solider Eindruck</option>
+            <option value="2">2 Sterne - noch Luft nach oben</option>
+            <option value="1">1 Stern - bitte dringend verbessern!</option>
+          </select>
+        </label>
+      </div>
+        <div id="reviewField" class="review-field">
           <label>
-            Sternbewertung
-            <select id="reviewRating">
-              <option value="5">5 Sterne - Perfekt!</option>
-              <option value="4">4 Sterne - fast perfekt</option>
-              <option value="3">3 Sterne - solider Eindruck</option>
-              <option value="2">2 Sterne - noch Luft nach oben</option>
-              <option value="1">1 Stern - bitte dringend verbessern!</option>
-            </select>
+            Deine Nachricht
+            <textarea
+              id="reviewText"
+              placeholder="Erzähl uns, wie dein Erlebnis war."
+            ></textarea>
           </label>
         </div>
-        <label>
-          Deine Nachricht
-          <textarea
-            id="reviewText"
-            placeholder="Was hat dir gefallen oder nervt dich?"
-          ></textarea>
-        </label>
-        <label class="publish-toggle">
-          <input id="publishReview" type="checkbox" checked />
-          Rezension veröffentlichen
-        </label>
-        <p id="reviewFeedback" class="order-error"></p>
+        <div id="bugFields" class="bug-fields">
+          <label>
+            Was ist passiert?
+            <textarea
+              id="bugDescription"
+              placeholder="Beschreibe, was du gemacht hast und was genau passiert ist."
+            ></textarea>
+          </label>
+          <label>
+            Geräte/Umgebung
+            <textarea
+              id="reviewEnvironment"
+              placeholder="Browser, Gerät, Betriebssystem, Uhrzeit: alles, was zur Reproduktion hilft."
+            ></textarea>
+          </label>
+        </div>
         <button id="postReview" type="button">Absenden</button>
+        <p id="reviewFeedback" class="order-error"></p>
         <p class="mail-hint">Die Nachricht wird über unseren sicheren Service automatisch an dich weitergeleitet.</p>
       </section>
 
@@ -604,11 +650,13 @@
       const reviewName = document.getElementById("reviewName");
       const reviewEmail = document.getElementById("reviewEmail");
       const reviewText = document.getElementById("reviewText");
+      const reviewExpected = document.getElementById("reviewExpected");
+      const reviewEnvironment = document.getElementById("reviewEnvironment");
+      const bugDescription = document.getElementById("bugDescription");
       const reviewRating = document.getElementById("reviewRating");
       const reviewType = document.getElementById("reviewType");
       const reviewFeedback = document.getElementById("reviewFeedback");
       const postReview = document.getElementById("postReview");
-      const publishReview = document.getElementById("publishReview");
       const reviewsList = document.getElementById("reviewsList");
       const reportOverlay = document.getElementById("reportOverlay");
       const reportPreview = document.getElementById("reportPreview");
@@ -677,7 +725,8 @@
       function validateReview() {
         const name = reviewName.value.trim();
         const email = reviewEmail.value.trim();
-        const text = reviewText.value.trim();
+        const type = reviewType.value;
+        const text = type === "bug" ? bugDescription.value.trim() : reviewText.value.trim();
         if (!name) {
           reviewFeedback.textContent = "Bitte deinen Namen eintragen.";
           return false;
@@ -819,13 +868,19 @@ ${review.text}`;
           return;
         }
 
+        const textValue =
+          reviewType.value === "bug"
+            ? bugDescription.value.trim()
+            : reviewText.value.trim();
         const payload = {
           name: reviewName.value.trim(),
           email: reviewEmail.value.trim(),
-          text: reviewText.value.trim(),
+          text: textValue,
+          expected: reviewExpected.value.trim(),
+          environment: reviewEnvironment.value.trim(),
           rating: reviewRating.value,
           type: reviewType.value,
-          publish: publishReview.checked ? "published" : "pending",
+          publish: reviewType.value === "bug" ? "pending" : "published",
         };
 
         try {
@@ -835,7 +890,7 @@ ${review.text}`;
           return;
         }
 
-        if (payload.type === "review" && publishReview.checked) {
+        if (payload.type === "review") {
           publishedReviews.unshift({
             name: payload.name,
             rating: payload.rating,
@@ -920,24 +975,25 @@ ${review.text}`;
 
     <script>
       (function () {
-        const thumb = document.querySelector(".custom-scrollbar-thumb");
-        if (!thumb) {
-          return;
-        }
-        function updateThumb() {
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          if (docHeight <= 0) {
-            thumb.style.transform = "translateY(0)";
+        const reviewTypeSelector = document.getElementById("reviewType");
+        const bugFields = document.getElementById("bugFields");
+        const reviewField = document.getElementById("reviewField");
+
+        function updateBugFields() {
+          if (!bugFields) {
             return;
           }
-          const ratio = window.scrollY / docHeight;
-          const containerHeight = document.querySelector(".custom-scrollbar").clientHeight - thumb.clientHeight;
-          thumb.style.transform = `translateY(${Math.min(containerHeight, Math.max(0, ratio * containerHeight))}px)`;
+          const isBug = reviewTypeSelector.value === "bug";
+          bugFields.style.display = isBug ? "flex" : "none";
+          if (reviewField) {
+            reviewField.style.display = isBug ? "none" : "block";
+          }
         }
-        window.addEventListener("scroll", updateThumb, { passive: true });
-        window.addEventListener("resize", updateThumb);
-        updateThumb();
+
+        reviewTypeSelector.addEventListener("change", updateBugFields);
+        updateBugFields();
       })();
     </script>
+
   </body>
 </html>

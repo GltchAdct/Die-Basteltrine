@@ -606,18 +606,11 @@
             Was ist passiert?
             <textarea
               id="bugDescription"
-              placeholder="Beschreibe, was du gemacht hast und was genau passiert ist."
+              placeholder="Bitte beschreibe, was passiert ist und wie die Situation war."
             ></textarea>
           </label>
           <label>
-            Erwartete Situation
-            <textarea
-              id="reviewExpected"
-              placeholder="Was hättest du erwartet, dass passiert?"
-            ></textarea>
-          </label>
-          <label>
-            Geräte/Umgebung
+            Browser/Gerät
             <textarea
               id="reviewEnvironment"
               placeholder="Browser, Gerät, Betriebssystem, Uhrzeit: alles, was zur Reproduktion hilft."
@@ -657,7 +650,6 @@
       const reviewName = document.getElementById("reviewName");
       const reviewEmail = document.getElementById("reviewEmail");
       const reviewText = document.getElementById("reviewText");
-      const reviewExpected = document.getElementById("reviewExpected");
       const reviewEnvironment = document.getElementById("reviewEnvironment");
       const bugDescription = document.getElementById("bugDescription");
       const reviewRating = document.getElementById("reviewRating");
@@ -891,16 +883,14 @@ ${review.text}`;
         const textValue = isBug
           ? bugDescription.value.trim()
           : reviewText.value.trim();
-        const expectedValue = reviewExpected.value.trim();
         const environmentValue = reviewEnvironment.value.trim();
         const combinedText = isBug
-          ? createBugDetails(textValue, expectedValue, environmentValue)
+          ? createBugDetails(textValue, '', environmentValue)
           : textValue;
         const payload = {
           name: reviewName.value.trim(),
           email: reviewEmail.value.trim(),
           text: combinedText,
-          expected: expectedValue,
           environment: environmentValue,
           rating: isBug ? undefined : reviewRating.value,
           type: reviewType.value,

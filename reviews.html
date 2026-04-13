@@ -729,6 +729,18 @@
         });
       }
 
+      function createBugDetails(description, expected, environment) {
+        const sections = [];
+        sections.push("Fehlerbeschreibung: " + description);
+        if (expected) {
+          sections.push("Erwartet: " + expected);
+        }
+        if (environment) {
+          sections.push("Umgebung: " + environment);
+        }
+        return sections.join("\n\n");
+      }
+
       function validateReview() {
         const name = reviewName.value.trim();
         const email = reviewEmail.value.trim();
@@ -875,19 +887,24 @@ ${review.text}`;
           return;
         }
 
-        const textValue =
-          reviewType.value === "bug"
-            ? bugDescription.value.trim()
-            : reviewText.value.trim();
+        const isBug = reviewType.value === "bug";
+        const textValue = isBug
+          ? bugDescription.value.trim()
+          : reviewText.value.trim();
+        const expectedValue = reviewExpected.value.trim();
+        const environmentValue = reviewEnvironment.value.trim();
+        const combinedText = isBug
+          ? createBugDetails(textValue, expectedValue, environmentValue)
+          : textValue;
         const payload = {
           name: reviewName.value.trim(),
           email: reviewEmail.value.trim(),
-          text: textValue,
-          expected: reviewExpected.value.trim(),
-          environment: reviewEnvironment.value.trim(),
-          rating: reviewRating.value,
+          text: combinedText,
+          expected: expectedValue,
+          environment: environmentValue,
+          rating: isBug ? undefined : reviewRating.value,
           type: reviewType.value,
-          publish: reviewType.value === "bug" ? "pending" : "published",
+          publish: isBug ? "pending" : "published",
         };
 
         try {

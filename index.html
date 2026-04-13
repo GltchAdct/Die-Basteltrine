@@ -24,9 +24,41 @@
         scroll-behavior: smooth;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
       a {
         text-decoration: none;
         color: inherit;
+      }
+
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
       }
 
       header {
@@ -252,8 +284,38 @@
       .social-icon {
         width: 18px;
         height: 18px;
-        fill: currentColor;
         flex-shrink: 0;
+        border-radius: 50%;
+        background: #ffeda8;
+        color: #003631;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .social-icon svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+      }
+
+      .social-icon.facebook {
+        background: #3b5998;
+        color: #fff;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-weight: 700;
+      }
+
+      .social-icon.whatsapp {
+        background: #fff;
+        color: #25d366;
+        border: 2px solid #25d366;
+      }
+
+      .social-icon.instagram {
+        background: radial-gradient(circle at 30% 30%, #fccc63, #ef6b5a 45%, #b33e99 70%, #5b5fde 90%);
+        color: #fff;
+        font-size: 0.65em;
       }
 
       .intro {
@@ -428,11 +490,13 @@
         font-size: 14px;
       }
 
+
       /* ----- RESPONSIVENESS ----- */
       
     </style>
   </head>
   <body>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -472,14 +536,14 @@
           href="https://www.facebook.com/die.basteltrine"
           target="_blank"
           rel="noopener"
-        >Facebook</a>
+        ><span class="social-icon facebook" aria-hidden="true">f</span>Facebook</a>
         und per 
         <a
           class="social-link"
           href="https://whatsapp.com/channel/0029VbC8lGIDOQIOhJWQ2w2l"
           target="_blank"
           rel="noopener"
-        >WhatsApp.</a>
+        ><span class="social-icon whatsapp" aria-hidden="true"><svg viewBox="0 0 24 24" role="presentation"><path d="M12 2C6.48 2 2 6.48 2 12a10 10 0 001.5 5.29L2 22l4.72-1.36A10 10 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm3.07 7.57l-.9-.9a1 1 0 00-1.4 0l-.68.68a2 2 0 01-1.03.55 2 2 0 00-1.63.39l-.3.3a2 2 0 00-.52 1.55l.21 1.35a2 2 0 00.43.95l1.14 1.14a2 2 0 001.15.55l1.34.29a2 2 0 001.6-.36l.76-.76a1 1 0 000-1.4l-1.02-1.02a1 1 0 01-.27-.7l.03-.85a1 1 0 00-.29-.7l-.7-.7a1 1 0 00-1.4 0z"/></svg></span>WhatsApp.</a>
       </p>
     </section>
 
@@ -659,6 +723,7 @@ Bei unsachgemäßem Gebrauch erfolgt keine Haftung.</p>
         });
       })();
     </script>
+
 
     <footer>
       <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>

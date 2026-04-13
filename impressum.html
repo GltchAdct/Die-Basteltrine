@@ -165,6 +165,28 @@
         transform: scale(1.1);
       }
 
+      .custom-scrollbar {
+        position: fixed;
+        top: 20px;
+        right: 16px;
+        width: 6px;
+        height: calc(100vh - 40px);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 999px;
+        pointer-events: none;
+        z-index: 330;
+      }
+
+      .custom-scrollbar-thumb {
+        width: 100%;
+        height: 60px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #ffd166, #ffb703);
+        box-shadow: 0 0 12px rgba(255, 209, 102, 0.7);
+        transform: translateY(0);
+        transition: transform 0.2s ease;
+      }
+
       button,
       .panel-link,
       .product-link,
@@ -381,6 +403,9 @@
   </head>
 
   <body>
+    <div class="custom-scrollbar" aria-hidden="true">
+      <div class="custom-scrollbar-thumb"></div>
+    </div>
     <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
@@ -497,6 +522,29 @@
             }, 220);
           });
         });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const thumb = document.querySelector(".custom-scrollbar-thumb");
+        const container = document.querySelector(".custom-scrollbar");
+        if (!thumb || !container) {
+          return;
+        }
+        function updateThumb() {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (docHeight <= 0) {
+            thumb.style.transform = "translateY(0)";
+            return;
+          }
+          const ratio = window.scrollY / docHeight;
+          const maxY = container.clientHeight - thumb.clientHeight;
+          thumb.style.transform = `translateY(${Math.min(maxY, Math.max(0, ratio * maxY))}px)`;
+        }
+        window.addEventListener("scroll", updateThumb, { passive: true });
+        window.addEventListener("resize", updateThumb);
+        updateThumb();
       })();
     </script>
 

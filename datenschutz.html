@@ -18,6 +18,62 @@
         color: #ffeda8;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
+
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      .mail-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .mail-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #ffeda8;
+        color: #003631;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .mail-icon svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+      }
 
       header {
         display: flex;
@@ -149,6 +205,7 @@
       nav a.active {
         color: #ffd166;
       }
+
 
 
       @media (max-width: 900px) {
@@ -290,6 +347,7 @@
   </head>
 
   <body>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -329,7 +387,8 @@
       <p>
         Marko Letz<br />Str. der Opfer des Faschismus 6<br />38820
         Halberstadt<br />E-Mail:
-        <a href="mailto:basteltrine@magenta.de">basteltrine@magenta.de</a>
+        <a class="mail-link" href="mailto:basteltrine@magenta.de"
+          ><span class="mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="presentation"><path d="M3 6h18v12H3z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 6l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>basteltrine@magenta.de</a>
       </p>
 
       <h2>Server-Logfiles</h2>

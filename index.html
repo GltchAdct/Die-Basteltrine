@@ -101,6 +101,28 @@
         transition: transform 0.2s ease;
       }
 
+      .btn-feedback {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-feedback::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.35);
+        opacity: 0;
+        transform: scale(0);
+        border-radius: inherit;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+      }
+
+      .btn-feedback.btn-feedback-active::after {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
       button,
       .panel-link,
       .product-link,
@@ -618,6 +640,22 @@ Bei unsachgemäßem Gebrauch erfolgt keine Haftung.</p>
 
         mainNav?.querySelectorAll("a").forEach(function (link) {
           link.addEventListener("click", closeMenu);
+        });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const selectors = "button, .panel-link, .product-link, .cart-remove-btn, .controls-toggle, .menu-button";
+        const elements = document.querySelectorAll(selectors);
+        elements.forEach(function (el) {
+          el.classList.add("btn-feedback");
+          el.addEventListener("click", function () {
+            el.classList.add("btn-feedback-active");
+            setTimeout(function () {
+              el.classList.remove("btn-feedback-active");
+            }, 220);
+          });
         });
       })();
     </script>

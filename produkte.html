@@ -18,6 +18,29 @@
         color: #ffeda8;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
       body.modal-open header {
         transform: translateY(-120px);
         opacity: 0;
@@ -26,6 +49,15 @@
       }
 
       /* HEADER */
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
       header {
         display: flex;
         align-items: center;
@@ -831,6 +863,7 @@
   </head>
 
   <body>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -1484,6 +1517,7 @@
         });
       })();
     </script>
+
 
     <footer>
       <p>&copy; 2026 Die Basteltrine. Alle Rechte vorbehalten.</p>

@@ -18,6 +18,38 @@
         color: #ffeda8;
       }
 
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #ffd166;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #ffb703;
+      }
+
+      body {
+        scrollbar-color: #ffd166 rgba(28, 54, 47, 0.5);
+      }
+
+      .status-banner {
+        background: linear-gradient(135deg, rgba(255, 209, 102, 0.9), rgba(255, 183, 0, 0.8));
+        color: #00231f;
+        text-align: center;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+
       header {
         display: flex;
         align-items: center;
@@ -61,9 +93,11 @@
         padding-bottom: 5px;
       }
 
+
       nav a:hover {
         color: #ffd166;
       }
+
 
       .menu-button {
         width: 44px;
@@ -337,10 +371,81 @@
         text-decoration: underline;
         font-size: 14px;
       }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: inherit;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .social-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #ffeda8;
+        color: #003631;
+        font-size: 0.7em;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .social-icon.facebook {
+        background: #3b5998;
+        color: #fff;
+        font-size: 0.75em;
+      }
+
+      .social-icon.instagram {
+        background: radial-gradient(circle at 30% 30%, #fccc63, #ef6b5a 45%, #b33e99 70%, #5b5fde 90%);
+        color: #fff;
+        font-size: 0.6em;
+      }
+
+      .social-icon.whatsapp {
+        background: linear-gradient(135deg, #25d366, #1ebe5f);
+        color: #003631;
+        font-size: 0.7em;
+      }
+
+      .social-icon svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+      }
+
+      .mail-link,
+      .mail-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .mail-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #ffeda8;
+        color: #003631;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mail-icon svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+      }
     </style>
   </head>
 
   <body>
+    <div class="status-banner">Die Seite befindet sich noch im Aufbau – nicht alle Funktionen sind live.</div>
     <header>
       <div class="logo-group">
         <a class="logo-link" href="index.html">
@@ -380,15 +485,16 @@
           <li>
             Instagram:
             <a
+              class="social-link"
               href="https://www.instagram.com/die_basteltrine_/"
               target="_blank"
               rel="noopener noreferrer"
-              >@die_basteltrine_</a
-            >
+            ><span class="social-icon instagram" aria-hidden="true"><svg viewBox="0 0 24 24" role="presentation"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm4.5-.5a1 1 0 110 2 1 1 0 010-2z"/></svg></span>@die_basteltrine_</a>
           </li>
           <li>
             Facebook:
             <a
+              class="social-link"
               href="https://www.facebook.com/die.basteltrine"
               onclick="
                 openFacebook(
@@ -397,8 +503,7 @@
                   'fb://facewebmodal/f?href=https://www.facebook.com/die.basteltrine',
                 )
               "
-              >@die.basteltrine</a
-            >
+            ><span class="social-icon facebook" aria-hidden="true">f</span>Zur Facebook-Seite</a>
           </li>
         </ul>
       </div>
@@ -430,8 +535,7 @@
           <a
             class="mail-cta"
             href="mailto:basteltrine@magenta.de?subject=Pers%C3%B6nliche%20Anfrage"
-            >Per E-Mail anfragen</a
-          >
+          >Per E-Mail anfragen</a>
         </div>
       </div>
     </section>
@@ -525,6 +629,20 @@
             }, 220);
           });
         });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const bar = document.querySelector(".scroll-progress-bar");
+        function update() {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const ratio = docHeight > 0 ? scrollTop / docHeight : 0;
+          bar.style.width = Math.min(100, Math.max(0, ratio * 100)) + "%";
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        update();
       })();
     </script>
 
